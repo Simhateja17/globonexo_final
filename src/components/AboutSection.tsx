@@ -80,7 +80,12 @@ const AboutSection = () => {
   ];
 
   return (
-    <section className="w-full bg-black py-12 sm:py-16 lg:py-20">
+    <section 
+      className="w-full py-12 sm:py-16 lg:py-20"
+      style={{
+        background: 'linear-gradient(180deg, #000000 0%, #141414 100%)',
+      }}
+    >
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16 items-start">
           {/* Left Side - Stats Grid */}
