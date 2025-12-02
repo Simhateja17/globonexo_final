@@ -1,26 +1,98 @@
+/* Roboto Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
 @import "tailwindcss";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* Globonexo Colors */
+  --primary-green: #95DE64;
+  --text-light: #F0F0F0;
+  --text-muted: #BFBFBF;
+  --dark-bg: #000000;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary-green);
+  --color-text-light: var(--text-light);
+  --color-text-muted: var(--text-muted);
+  --font-sans: 'Roboto', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #000000;
+    --foreground: #F0F0F0;
   }
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Custom scrollbar for dark mode */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* ===========================================
+   LIGHT SWITCH BUTTON - Responsive Sizes
+   Edit these values to change across all screens
+   =========================================== */
+
+:root {
+  /* Small screens (mobile) */
+  --light-switch-width: 32px;
+  --light-switch-height: 32px;
+  --light-switch-padding: 7px;
+  --light-switch-radius: 6px;
+}
+
+@media (min-width: 640px) {
+  :root {
+    /* Medium screens (tablets) */
+    --light-switch-width: 34px;
+    --light-switch-height: 34px;
+    --light-switch-padding: 8px;
+    --light-switch-radius: 8px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    /* Large screens (desktop 1440px base) */
+    --light-switch-width: 58px;
+    --light-switch-height: 58px;
+    --light-switch-padding: 9px;
+    --light-switch-radius: 15px;
+  }
+}
+
+/* Apply CSS variables to light switch button */
+.light-switch-btn {
+  width: var(--light-switch-width) !important;
+  height: var(--light-switch-height) !important;
 }
