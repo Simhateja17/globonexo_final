@@ -2,8 +2,12 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { useTheme } from "@/context/ThemeContext";
 
 const ContactSection = () => {
+  const { theme } = useTheme();
+  const isLightMode = theme === "light";
+  
   const [formData, setFormData] = useState({
     name: "",
     subject: "",
@@ -33,9 +37,11 @@ const ContactSection = () => {
 
   return (
     <section 
-      className="w-full py-16 sm:py-20 lg:py-[120px]"
+      className="w-full py-16 sm:py-20 lg:py-[120px] transition-colors duration-300"
       style={{
-        background: 'linear-gradient(180deg, #000000 0%, #141414 100%)',
+        background: isLightMode 
+          ? 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%)'
+          : 'linear-gradient(180deg, #000000 0%, #141414 100%)',
       }}
     >
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
@@ -47,12 +53,16 @@ const ContactSection = () => {
           </p>
 
           {/* Main Heading */}
-          <h2 className="text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] text-[#F0F0F0] mb-4">
+          <h2 className={`text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] mb-4 ${
+            isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
+          }`}>
             Contact us for Any Questions
           </h2>
 
           {/* Description */}
-          <p className="max-w-[1160px] text-sm font-normal leading-[22px] text-[#BFBFBF]">
+          <p className={`max-w-[1160px] text-sm font-normal leading-[22px] ${
+            isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+          }`}>
             Let's Connect and Find the Right Solutions for You!
           </p>
         </div>
@@ -60,9 +70,13 @@ const ContactSection = () => {
         {/* Content - Contact Info + Form */}
         <div className="flex flex-col lg:flex-row gap-6 max-w-[1160px]">
           {/* Contact Info Card */}
-          <div className="w-full lg:w-[370px] bg-[#141414] rounded-xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6">
+          <div className={`w-full lg:w-[370px] rounded-xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 ${
+            isLightMode ? 'bg-[#F0F0F0]' : 'bg-[#141414]'
+          }`}>
             {/* Title */}
-            <h3 className="text-xl lg:text-2xl font-medium leading-8 text-[#F0F0F0]">
+            <h3 className={`text-xl lg:text-2xl font-medium leading-8 ${
+              isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
+            }`}>
               Contact Info
             </h3>
 
@@ -75,9 +89,11 @@ const ContactSection = () => {
                   alt="Email"
                   width={16}
                   height={16}
-                  className="w-4 h-4 object-contain"
+                  className={`w-4 h-4 object-contain ${isLightMode ? 'invert' : ''}`}
                 />
-                <span className="text-sm font-normal leading-[22px] text-[#BFBFBF]">
+                <span className={`text-sm font-normal leading-[22px] ${
+                  isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+                }`}>
                   conatct.global@globonexo.com
                 </span>
               </div>
@@ -89,9 +105,11 @@ const ContactSection = () => {
                   alt="Phone"
                   width={16}
                   height={16}
-                  className="w-4 h-4 object-contain"
+                  className={`w-4 h-4 object-contain ${isLightMode ? 'invert' : ''}`}
                 />
-                <span className="text-sm font-normal leading-[22px] text-[#BFBFBF]">
+                <span className={`text-sm font-normal leading-[22px] ${
+                  isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+                }`}>
                   +49 711 123456
                 </span>
               </div>
@@ -103,9 +121,11 @@ const ContactSection = () => {
                   alt="Location"
                   width={16}
                   height={16}
-                  className="w-4 h-4 object-contain mt-1"
+                  className={`w-4 h-4 object-contain mt-1 ${isLightMode ? 'invert' : ''}`}
                 />
-                <span className="text-sm font-normal leading-[22px] text-[#BFBFBF]">
+                <span className={`text-sm font-normal leading-[22px] ${
+                  isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+                }`}>
                   Headquarters: Koenigstr. 10c, 70173 Stuttgart, Germany
                 </span>
               </div>
@@ -117,9 +137,11 @@ const ContactSection = () => {
                   alt="Phone"
                   width={16}
                   height={16}
-                  className="w-4 h-4 object-contain"
+                  className={`w-4 h-4 object-contain ${isLightMode ? 'invert' : ''}`}
                 />
-                <span className="text-sm font-normal leading-[22px] text-[#BFBFBF]">
+                <span className={`text-sm font-normal leading-[22px] ${
+                  isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+                }`}>
                   +49 711 123456
                 </span>
               </div>
@@ -131,14 +153,16 @@ const ContactSection = () => {
                 <a
                   key={index}
                   href={social.href}
-                  className="w-9 h-9 flex items-center justify-center bg-[#1F1F1F] rounded-lg p-2 hover:bg-[#2a2a2a] transition-colors"
+                  className={`w-9 h-9 flex items-center justify-center rounded-lg p-2 transition-colors ${
+                    isLightMode ? 'bg-[#E5E5E5] hover:bg-[#D9D9D9]' : 'bg-[#1F1F1F] hover:bg-[#2a2a2a]'
+                  }`}
                 >
                   <Image
                     src={social.icon}
                     alt={social.alt}
                     width={20}
                     height={20}
-                    className="w-5 h-5 object-contain"
+                    className={`w-5 h-5 object-contain ${isLightMode ? 'invert' : ''}`}
                   />
                 </a>
               ))}
@@ -159,7 +183,11 @@ const ContactSection = () => {
                     placeholder="Name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full h-[59.5px] bg-[#1F1F1F] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] text-[#F0F0F0] placeholder-[#BFBFBF] outline-none focus:ring-1 focus:ring-[#95DE64] transition-all"
+                    className={`w-full h-[59.5px] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] outline-none focus:ring-1 focus:ring-[#95DE64] transition-all ${
+                      isLightMode 
+                        ? 'bg-[#D9D9D9] text-[#141414] placeholder-[#595959]' 
+                        : 'bg-[#1F1F1F] text-[#F0F0F0] placeholder-[#BFBFBF]'
+                    }`}
                   />
 
                   {/* Subject */}
@@ -169,7 +197,11 @@ const ContactSection = () => {
                     placeholder="Subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className="w-full h-[59.5px] bg-[#1F1F1F] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] text-[#F0F0F0] placeholder-[#BFBFBF] outline-none focus:ring-1 focus:ring-[#95DE64] transition-all"
+                    className={`w-full h-[59.5px] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] outline-none focus:ring-1 focus:ring-[#95DE64] transition-all ${
+                      isLightMode 
+                        ? 'bg-[#D9D9D9] text-[#141414] placeholder-[#595959]' 
+                        : 'bg-[#1F1F1F] text-[#F0F0F0] placeholder-[#BFBFBF]'
+                    }`}
                   />
 
                   {/* Email */}
@@ -179,7 +211,11 @@ const ContactSection = () => {
                     placeholder="Email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="w-full h-[59.5px] bg-[#1F1F1F] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] text-[#F0F0F0] placeholder-[#BFBFBF] outline-none focus:ring-1 focus:ring-[#95DE64] transition-all"
+                    className={`w-full h-[59.5px] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] outline-none focus:ring-1 focus:ring-[#95DE64] transition-all ${
+                      isLightMode 
+                        ? 'bg-[#D9D9D9] text-[#141414] placeholder-[#595959]' 
+                        : 'bg-[#1F1F1F] text-[#F0F0F0] placeholder-[#BFBFBF]'
+                    }`}
                   />
                 </div>
 
@@ -190,7 +226,11 @@ const ContactSection = () => {
                     placeholder="Message"
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full h-[180px] lg:h-[226.5px] bg-[#1F1F1F] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] text-[#F0F0F0] placeholder-[#BFBFBF] outline-none focus:ring-1 focus:ring-[#95DE64] transition-all resize-none"
+                    className={`w-full h-[180px] lg:h-[226.5px] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] outline-none focus:ring-1 focus:ring-[#95DE64] transition-all resize-none ${
+                      isLightMode 
+                        ? 'bg-[#D9D9D9] text-[#141414] placeholder-[#595959]' 
+                        : 'bg-[#1F1F1F] text-[#F0F0F0] placeholder-[#BFBFBF]'
+                    }`}
                   />
                 </div>
               </div>

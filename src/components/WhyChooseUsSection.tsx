@@ -1,28 +1,36 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import { useTheme } from "@/context/ThemeContext";
 
 interface WhyChooseCardProps {
   icon: string;
   title: string;
   description: string;
+  isLightMode?: boolean;
 }
 
-const WhyChooseCard = ({ icon, title, description }: WhyChooseCardProps) => {
+const WhyChooseCard = ({ icon, title, description, isLightMode = false }: WhyChooseCardProps) => {
   return (
-    <div className="flex-shrink-0 w-[240px] sm:w-[260px] lg:w-[272px] h-[280px] sm:h-[290px] lg:h-[302px] bg-[#1F1F1F] border border-[#141414] rounded-xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6">
+    <div className={`flex-shrink-0 w-[240px] sm:w-[260px] lg:w-[272px] h-[280px] sm:h-[290px] lg:h-[302px] rounded-xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 border ${
+      isLightMode ? 'bg-[#E5E5E5] border-[#D9D9D9]' : 'bg-[#1F1F1F] border-[#141414]'
+    }`}>
       {/* Icon */}
       <div className="text-4xl lg:text-5xl">
         {icon}
       </div>
 
       {/* Title */}
-      <h3 className="text-xl lg:text-2xl font-medium leading-8 text-[#F0F0F0]">
+      <h3 className={`text-xl lg:text-2xl font-medium leading-8 ${
+        isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
+      }`}>
         {title}
       </h3>
 
       {/* Description */}
-      <p className="text-sm font-normal leading-[22px] text-[#BFBFBF]">
+      <p className={`text-sm font-normal leading-[22px] ${
+        isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+      }`}>
         {description}
       </p>
     </div>
@@ -32,6 +40,8 @@ const WhyChooseCard = ({ icon, title, description }: WhyChooseCardProps) => {
 const WhyChooseUsSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const { theme } = useTheme();
+  const isLightMode = theme === "light";
 
   const cards = [
     {
@@ -92,7 +102,9 @@ const WhyChooseUsSection = () => {
   }, [isHovered]);
 
   return (
-    <section className="w-full bg-[#141414] py-16 sm:py-20 lg:py-[120px]">
+    <section className={`w-full py-16 sm:py-20 lg:py-[120px] transition-colors duration-300 ${
+      isLightMode ? 'bg-[#F5F5F5]' : 'bg-[#141414]'
+    }`}>
       {/* Header Content */}
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px] mb-8 lg:mb-10">
         {/* Superheading */}
@@ -101,12 +113,16 @@ const WhyChooseUsSection = () => {
         </p>
 
         {/* Main Heading */}
-        <h2 className="text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] text-[#F0F0F0] mb-4">
+        <h2 className={`text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] mb-4 ${
+          isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
+        }`}>
           Why Our Clients Choose Globonexo
         </h2>
 
         {/* Description */}
-        <p className="max-w-[1160px] text-sm font-normal leading-[22px] text-[#BFBFBF]">
+        <p className={`max-w-[1160px] text-sm font-normal leading-[22px] ${
+          isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+        }`}>
           We offer seamless collaboration, access to cutting-edge technologies, and tailored solutions that help businesses grow and stay ahead in a competitive market. With a commitment to quality, innovation, and customer satisfaction, we empower our clients to achieve their goals faster and more efficiently.
         </p>
       </div>
@@ -115,10 +131,10 @@ const WhyChooseUsSection = () => {
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
         <div className="relative w-full lg:w-[1160px]">
           {/* Left Fade Gradient */}
-          <div className="absolute left-0 top-0 bottom-0 w-[40px] sm:w-[60px] lg:w-[80px] bg-gradient-to-r from-[#141414] to-transparent z-10 pointer-events-none" />
+          <div className={`absolute left-0 top-0 bottom-0 w-[40px] sm:w-[60px] lg:w-[80px] bg-gradient-to-r ${isLightMode ? 'from-[#F5F5F5]' : 'from-[#141414]'} to-transparent z-10 pointer-events-none`} />
           
           {/* Right Fade Gradient */}
-          <div className="absolute right-0 top-0 bottom-0 w-[40px] sm:w-[60px] lg:w-[80px] bg-gradient-to-l from-[#141414] to-transparent z-10 pointer-events-none" />
+          <div className={`absolute right-0 top-0 bottom-0 w-[40px] sm:w-[60px] lg:w-[80px] bg-gradient-to-l ${isLightMode ? 'from-[#F5F5F5]' : 'from-[#141414]'} to-transparent z-10 pointer-events-none`} />
 
           {/* Scrolling Container */}
           <div 
@@ -138,6 +154,7 @@ const WhyChooseUsSection = () => {
                 icon={card.icon}
                 title={card.title}
                 description={card.description}
+                isLightMode={isLightMode}
               />
             ))}
           </div>

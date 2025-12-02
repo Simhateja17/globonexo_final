@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTheme } from "@/context/ThemeContext";
 
 interface StatCardProps {
   value: string;
   label: string;
+  isLightMode?: boolean;
 }
 
-const StatCard = ({ value, label }: StatCardProps) => {
+const StatCard = ({ value, label, isLightMode = false }: StatCardProps) => {
   const [count, setCount] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -59,12 +61,18 @@ const StatCard = ({ value, label }: StatCardProps) => {
   return (
     <div
       ref={cardRef}
-      className="w-full sm:w-[calc(50%-12px)] lg:w-[173.5px] h-[140px] sm:h-[160px] lg:h-[173.5px] bg-[#1F1F1F] rounded-xl p-4 sm:p-5 lg:p-6 flex flex-col items-center justify-center gap-2"
+      className={`w-full sm:w-[calc(50%-12px)] lg:w-[173.5px] h-[140px] sm:h-[160px] lg:h-[173.5px] rounded-xl p-4 sm:p-5 lg:p-6 flex flex-col items-center justify-center gap-2 ${
+        isLightMode ? 'bg-[#E5E5E5]' : 'bg-[#1F1F1F]'
+      }`}
     >
-      <span className="text-3xl sm:text-4xl lg:text-[48px] font-black leading-[46px] text-[#F0F0F0] text-center">
+      <span className={`text-3xl sm:text-4xl lg:text-[48px] font-black leading-[46px] text-center ${
+        isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
+      }`}>
         {count}
       </span>
-      <span className="text-sm font-normal leading-[22px] text-[#BFBFBF] text-center">
+      <span className={`text-sm font-normal leading-[22px] text-center ${
+        isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+      }`}>
         {label}
       </span>
     </div>
@@ -72,6 +80,9 @@ const StatCard = ({ value, label }: StatCardProps) => {
 };
 
 const AboutSection = () => {
+  const { theme } = useTheme();
+  const isLightMode = theme === "light";
+
   const stats = [
     { value: "9", label: "countries" },
     { value: "3", label: "continents" },
@@ -81,9 +92,11 @@ const AboutSection = () => {
 
   return (
     <section 
-      className="w-full py-12 sm:py-16 lg:py-20"
+      className="w-full py-12 sm:py-16 lg:py-20 transition-colors duration-300"
       style={{
-        background: 'linear-gradient(180deg, #000000 0%, #141414 100%)',
+        background: isLightMode 
+          ? 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%)'
+          : 'linear-gradient(180deg, #000000 0%, #141414 100%)',
       }}
     >
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
@@ -92,7 +105,7 @@ const AboutSection = () => {
           <div className="w-full lg:w-auto flex-shrink-0">
             <div className="grid grid-cols-2 gap-4 lg:gap-6 w-full lg:w-[371px]">
               {stats.map((stat, index) => (
-                <StatCard key={index} value={stat.value} label={stat.label} />
+                <StatCard key={index} value={stat.value} label={stat.label} isLightMode={isLightMode} />
               ))}
             </div>
           </div>
@@ -105,16 +118,22 @@ const AboutSection = () => {
             </p>
 
             {/* Main Heading */}
-            <h2 className="text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] text-[#F0F0F0] mb-6">
+            <h2 className={`text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] mb-6 ${
+              isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
+            }`}>
               Driving Innovation Through Global Collaboration
             </h2>
 
             {/* Description Paragraphs */}
             <div className="space-y-4 mb-8">
-              <p className="text-sm font-normal leading-[22px] text-[#BFBFBF]">
+              <p className={`text-sm font-normal leading-[22px] ${
+                isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+              }`}>
                 Globonexo is an international IT outstaffing company committed to helping European companies grow faster and smarter. Our founders' proven track record in driving innovation and delivering IT solutions positions us as the trusted choice for outstaffing.
               </p>
-              <p className="text-sm font-normal leading-[22px] text-[#BFBFBF]">
+              <p className={`text-sm font-normal leading-[22px] ${
+                isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+              }`}>
                 We provide businesses with cost-effective, scalable, and high-quality IT resources to meet their unique needs. Whether you're looking to expand your development team, shorten time-to-market, or access niche skills, Globonexo is your strategic partner.
               </p>
             </div>

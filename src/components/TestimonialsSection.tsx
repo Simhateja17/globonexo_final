@@ -1,30 +1,40 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
+import { useTheme } from "@/context/ThemeContext";
 
 interface TestimonialCardProps {
   quote: string;
   name: string;
   title: string;
+  isLightMode?: boolean;
 }
 
-const TestimonialCard = ({ quote, name, title }: TestimonialCardProps) => {
+const TestimonialCard = ({ quote, name, title, isLightMode = false }: TestimonialCardProps) => {
   return (
-    <div className="flex-shrink-0 w-[280px] sm:w-[320px] lg:w-[370px] h-[260px] sm:h-[272px] lg:h-[282px] bg-[#141414] rounded-xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6">
+    <div className={`flex-shrink-0 w-[280px] sm:w-[320px] lg:w-[370px] h-[260px] sm:h-[272px] lg:h-[282px] rounded-xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 ${
+      isLightMode ? 'bg-[#F0F0F0]' : 'bg-[#141414]'
+    }`}>
       {/* Quote */}
-      <p className="text-sm font-normal leading-[22px] text-[#BFBFBF] flex-1">
+      <p className={`text-sm font-normal leading-[22px] flex-1 ${
+        isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+      }`}>
         {quote}
       </p>
 
       {/* Author Info */}
       <div className="flex flex-col gap-1">
         {/* Name */}
-        <h3 className="text-xl sm:text-[22px] lg:text-2xl font-medium leading-8 text-[#F0F0F0]">
+        <h3 className={`text-xl sm:text-[22px] lg:text-2xl font-medium leading-8 ${
+          isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
+        }`}>
           {name}
         </h3>
 
         {/* Title */}
-        <p className="font-mono text-xs font-normal leading-5 text-[#BFBFBF]">
+        <p className={`font-mono text-xs font-normal leading-5 ${
+          isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+        }`}>
           {title}
         </p>
       </div>
@@ -35,6 +45,8 @@ const TestimonialCard = ({ quote, name, title }: TestimonialCardProps) => {
 const TestimonialsSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const { theme } = useTheme();
+  const isLightMode = theme === "light";
 
   const testimonials = [
     {
@@ -90,7 +102,9 @@ const TestimonialsSection = () => {
   }, [isHovered]);
 
   return (
-    <section className="w-full bg-black py-16 sm:py-20 lg:py-[120px]">
+    <section className={`w-full py-16 sm:py-20 lg:py-[120px] transition-colors duration-300 ${
+      isLightMode ? 'bg-white' : 'bg-black'
+    }`}>
       {/* Header Content */}
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px] mb-8 lg:mb-10">
         {/* Superheading */}
@@ -99,12 +113,16 @@ const TestimonialsSection = () => {
         </p>
 
         {/* Main Heading */}
-        <h2 className="text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] text-[#F0F0F0] mb-4">
+        <h2 className={`text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] mb-4 ${
+          isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
+        }`}>
           Customers Testmonials
         </h2>
 
         {/* Description */}
-        <p className="max-w-[1160px] text-sm font-normal leading-[22px] text-[#BFBFBF]">
+        <p className={`max-w-[1160px] text-sm font-normal leading-[22px] ${
+          isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+        }`}>
           Hear What Our Customers Say About Partnering with Globonexo!Hear What Our Customers Say About Partnering with Globonexo!
         </p>
       </div>
@@ -113,10 +131,14 @@ const TestimonialsSection = () => {
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
         <div className="relative w-full lg:w-[1160px]">
           {/* Left Fade Gradient */}
-          <div className="absolute left-0 top-0 bottom-0 w-[40px] sm:w-[60px] lg:w-[80px] bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+          <div className={`absolute left-0 top-0 bottom-0 w-[40px] sm:w-[60px] lg:w-[80px] bg-gradient-to-r ${
+            isLightMode ? 'from-white' : 'from-black'
+          } to-transparent z-10 pointer-events-none`} />
           
           {/* Right Fade Gradient */}
-          <div className="absolute right-0 top-0 bottom-0 w-[40px] sm:w-[60px] lg:w-[80px] bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+          <div className={`absolute right-0 top-0 bottom-0 w-[40px] sm:w-[60px] lg:w-[80px] bg-gradient-to-l ${
+            isLightMode ? 'from-white' : 'from-black'
+          } to-transparent z-10 pointer-events-none`} />
 
           {/* Scrolling Container */}
           <div 
@@ -136,6 +158,7 @@ const TestimonialsSection = () => {
                 quote={testimonial.quote}
                 name={testimonial.name}
                 title={testimonial.title}
+                isLightMode={isLightMode}
               />
             ))}
           </div>

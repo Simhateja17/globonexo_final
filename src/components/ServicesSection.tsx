@@ -2,17 +2,21 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { useTheme } from "@/context/ThemeContext";
 
 interface ServiceCardProps {
   icon: string;
   title: string;
   description: string;
   isGreenTitle?: boolean;
+  isLightMode?: boolean;
 }
 
-const ServiceCard = ({ icon, title, description, isGreenTitle = false }: ServiceCardProps) => {
+const ServiceCard = ({ icon, title, description, isGreenTitle = false, isLightMode = false }: ServiceCardProps) => {
   return (
-    <div className="flex-shrink-0 w-[280px] sm:w-[320px] lg:w-[370px] h-[320px] lg:h-[358px] bg-[#141414] rounded-xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6">
+    <div className={`flex-shrink-0 w-[280px] sm:w-[320px] lg:w-[370px] h-[320px] lg:h-[358px] rounded-xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 ${
+      isLightMode ? 'bg-[#F0F0F0]' : 'bg-[#141414]'
+    }`}>
       {/* Icon */}
       <div className="text-5xl lg:text-6xl h-[50px] lg:h-[64px] flex items-center">
         {icon}
@@ -21,21 +25,25 @@ const ServiceCard = ({ icon, title, description, isGreenTitle = false }: Service
       {/* Title */}
       <h3 
         className={`text-xl lg:text-2xl font-medium leading-8 ${
-          isGreenTitle ? 'text-[#95DE64]' : 'text-[#F0F0F0]'
+          isGreenTitle ? 'text-[#95DE64]' : (isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]')
         }`}
       >
         {title}
       </h3>
 
       {/* Description */}
-      <p className="text-sm font-normal leading-[22px] text-[#BFBFBF] flex-grow">
+      <p className={`text-sm font-normal leading-[22px] flex-grow ${
+        isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+      }`}>
         {description}
       </p>
 
       {/* Learn More Link */}
       <Link 
         href="#" 
-        className="flex items-center gap-2 text-[#BFBFBF] hover:text-[#95DE64] transition-colors group mt-auto"
+        className={`flex items-center gap-2 hover:text-[#95DE64] transition-colors group mt-auto ${
+          isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+        }`}
       >
         <span className="text-sm font-normal leading-[22px]">Learn more</span>
         <svg 
@@ -60,6 +68,8 @@ const ServiceCard = ({ icon, title, description, isGreenTitle = false }: Service
 const ServicesSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const { theme } = useTheme();
+  const isLightMode = theme === "light";
 
   const services = [
     {
@@ -120,7 +130,9 @@ const ServicesSection = () => {
   }, [isHovered]);
 
   return (
-    <section className="w-full bg-black py-12 sm:py-16 lg:py-20">
+    <section className={`w-full py-12 sm:py-16 lg:py-20 transition-colors duration-300 ${
+      isLightMode ? 'bg-white' : 'bg-black'
+    }`}>
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
         {/* Section Header */}
         <div className="mb-8 lg:mb-12">
@@ -130,12 +142,16 @@ const ServicesSection = () => {
           </p>
 
           {/* Main Heading */}
-          <h2 className="text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] text-[#F0F0F0] mb-4">
+          <h2 className={`text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] mb-4 ${
+            isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
+          }`}>
             What we're offering
           </h2>
 
           {/* Description */}
-          <p className="max-w-[1160px] text-sm font-normal leading-[22px] text-[#BFBFBF]">
+          <p className={`max-w-[1160px] text-sm font-normal leading-[22px] ${
+            isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+          }`}>
             We specialize in outstaffing solutions, including staff augmentation and dedicated teams, alongside software testing, and 24/7 multilingual IT helpdesk services. With expertise in modern technologies like AI, ML, cloud solutions, and a deep understanding of the European market, we deliver tailored solutions that drive innovation and scalability.
           </p>
         </div>
@@ -145,10 +161,14 @@ const ServicesSection = () => {
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
         <div className="relative w-full lg:w-[1160px] mx-auto">
           {/* Left Fade Gradient */}
-          <div className="absolute left-0 top-0 bottom-0 w-[60px] sm:w-[80px] lg:w-[120px] bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+          <div className={`absolute left-0 top-0 bottom-0 w-[60px] sm:w-[80px] lg:w-[120px] bg-gradient-to-r ${
+            isLightMode ? 'from-white' : 'from-black'
+          } to-transparent z-10 pointer-events-none`} />
           
           {/* Right Fade Gradient */}
-          <div className="absolute right-0 top-0 bottom-0 w-[60px] sm:w-[80px] lg:w-[120px] bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+          <div className={`absolute right-0 top-0 bottom-0 w-[60px] sm:w-[80px] lg:w-[120px] bg-gradient-to-l ${
+            isLightMode ? 'from-white' : 'from-black'
+          } to-transparent z-10 pointer-events-none`} />
 
           {/* Scrolling Container */}
           <div 
@@ -169,6 +189,7 @@ const ServicesSection = () => {
                 title={service.title}
                 description={service.description}
                 isGreenTitle={service.isGreenTitle}
+                isLightMode={isLightMode}
               />
             ))}
           </div>

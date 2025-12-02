@@ -3,16 +3,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useTheme } from "@/context/ThemeContext";
 
 interface NavItemProps {
   label: string;
   hasDropdown?: boolean;
+  isLightMode?: boolean;
 }
 
-const NavItem = ({ label, hasDropdown = true }: NavItemProps) => {
+const NavItem = ({ label, hasDropdown = true, isLightMode = false }: NavItemProps) => {
   return (
     <div className="flex items-center gap-1 cursor-pointer group">
-      <span className="text-[#F0F0F0] text-sm font-medium leading-[22px] group-hover:text-[#95DE64] transition-colors">
+      <span className={`text-sm font-medium leading-[22px] group-hover:text-[#95DE64] transition-colors ${
+        isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
+      }`}>
         {label}
       </span>
       {hasDropdown && (
@@ -24,7 +28,7 @@ const NavItem = ({ label, hasDropdown = true }: NavItemProps) => {
         >
           <path
             d="M1 1L4 3L7 1"
-            stroke="#F0F0F0"
+            stroke={isLightMode ? "#141414" : "#F0F0F0"}
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -37,6 +41,8 @@ const NavItem = ({ label, hasDropdown = true }: NavItemProps) => {
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+  const isLightMode = theme === "light";
 
   const navItems = [
     { label: "Home", hasDropdown: true },
@@ -48,12 +54,12 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="w-full bg-black">
+    <nav className={`w-full ${isLightMode ? 'bg-white' : 'bg-black'} transition-colors duration-300`}>
       <div className="max-w-[1440px] mx-auto h-[70px] flex items-center justify-between px-5 sm:px-10 lg:px-[140px] py-4">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 flex-shrink-0">
           <Image
-            src="/globonexo_logo_dark_mode.png"
+            src={isLightMode ? "/globonexo_light_mode.png" : "/globonexo_logo_dark_mode.png"}
             alt="Globonexo Logo"
             width={160}
             height={40}
@@ -65,7 +71,7 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center gap-6 xl:gap-8">
           {navItems.map((item) => (
-            <NavItem key={item.label} label={item.label} hasDropdown={item.hasDropdown} />
+            <NavItem key={item.label} label={item.label} hasDropdown={item.hasDropdown} isLightMode={isLightMode} />
           ))}
         </div>
 
@@ -73,11 +79,12 @@ const Navbar = () => {
         <div className="flex items-center gap-3 sm:gap-4">
           {/* Light Switch - 38x38px same as Join Now button height */}
           <Image
-            src="/light_switch.png"
-            alt="Light mode toggle"
+            src={isLightMode ? "/light_switch_light_mode.png" : "/light_switch.png"}
+            alt="Toggle theme"
             width={38}
             height={38}
             className="w-[38px] h-[38px] cursor-pointer hover:opacity-80 transition-opacity"
+            onClick={toggleTheme}
           />
 
           {/* Join Now Button */}
@@ -92,7 +99,7 @@ const Navbar = () => {
             aria-label="Toggle menu"
           >
             <svg
-              className="w-6 h-6 text-[#F0F0F0]"
+              className={`w-6 h-6 ${isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'}`}
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -119,11 +126,11 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-black border-t border-gray-800 px-5 py-4">
+        <div className={`lg:hidden ${isLightMode ? 'bg-white border-gray-200' : 'bg-black border-gray-800'} border-t px-5 py-4`}>
           <div className="flex flex-col gap-4">
             {navItems.map((item) => (
               <div key={item.label} className="flex items-center justify-between py-2">
-                <span className="text-[#F0F0F0] text-sm font-medium">{item.label}</span>
+                <span className={`text-sm font-medium ${isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'}`}>{item.label}</span>
                 {item.hasDropdown && (
                   <svg
                     className="w-2 h-1"
@@ -133,7 +140,7 @@ const Navbar = () => {
                   >
                     <path
                       d="M1 1L4 3L7 1"
-                      stroke="#F0F0F0"
+                      stroke={isLightMode ? "#141414" : "#F0F0F0"}
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
