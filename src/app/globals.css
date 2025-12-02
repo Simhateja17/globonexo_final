@@ -1,5 +1,5 @@
-/* Roboto Font */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+/* Roboto & Roboto Mono Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap');
 
 @import "tailwindcss";
 
@@ -95,4 +95,14 @@ body {
 .light-switch-btn {
   width: var(--light-switch-width) !important;
   height: var(--light-switch-height) !important;
+}
+
+/* Hide scrollbar for carousel/slider elements */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
