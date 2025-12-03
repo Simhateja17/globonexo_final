@@ -3,19 +3,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { useTheme } from "@/context/ThemeContext";
 
 interface NavItemProps {
   label: string;
+  href: string;
   hasDropdown?: boolean;
   isLightMode?: boolean;
+  isActive?: boolean;
 }
 
-const NavItem = ({ label, hasDropdown = true, isLightMode = false }: NavItemProps) => {
+const NavItem = ({ label, href, hasDropdown = true, isLightMode = false, isActive = false }: NavItemProps) => {
   return (
-    <div className="flex items-center gap-1 cursor-pointer group">
+    <Link href={href} className="flex items-center gap-1 cursor-pointer group">
       <span className={`text-sm font-medium leading-[22px] group-hover:text-[#95DE64] transition-colors ${
-        isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
+        isActive ? 'text-[#95DE64]' : (isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]')
       }`}>
         {label}
       </span>
@@ -28,14 +31,14 @@ const NavItem = ({ label, hasDropdown = true, isLightMode = false }: NavItemProp
         >
           <path
             d="M1 1L4 3L7 1"
-            stroke={isLightMode ? "#141414" : "#F0F0F0"}
+            stroke={isActive ? "#95DE64" : (isLightMode ? "#141414" : "#F0F0F0")}
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
         </svg>
       )}
-    </div>
+    </Link>
   );
 };
 
@@ -43,14 +46,15 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const isLightMode = theme === "light";
+  const pathname = usePathname();
 
   const navItems = [
-    { label: "Home", hasDropdown: true },
-    { label: "About us", hasDropdown: true },
-    { label: "Services", hasDropdown: true },
-    { label: "Special expertise", hasDropdown: true },
-    { label: "Learn more", hasDropdown: true },
-    { label: "Contact", hasDropdown: true },
+    { label: "Home", href: "/", hasDropdown: true },
+    { label: "About us", href: "/about", hasDropdown: true },
+    { label: "Services", href: "/services", hasDropdown: true },
+    { label: "Special expertise", href: "/expertise", hasDropdown: true },
+    { label: "Learn more", href: "/learn", hasDropdown: true },
+    { label: "Contact", href: "/contact", hasDropdown: true },
   ];
 
   return (
@@ -71,7 +75,14 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center gap-6 xl:gap-8">
           {navItems.map((item) => (
-            <NavItem key={item.label} label={item.label} hasDropdown={item.hasDropdown} isLightMode={isLightMode} />
+            <NavItem 
+              key={item.label} 
+              label={item.label} 
+              href={item.href}
+              hasDropdown={item.hasDropdown} 
+              isLightMode={isLightMode}
+              isActive={pathname === item.href}
+            />
           ))}
         </div>
 
@@ -129,8 +140,10 @@ const Navbar = () => {
         <div className={`lg:hidden ${isLightMode ? 'bg-white border-gray-200' : 'bg-black border-gray-800'} border-t px-5 py-4`}>
           <div className="flex flex-col gap-4">
             {navItems.map((item) => (
-              <div key={item.label} className="flex items-center justify-between py-2">
-                <span className={`text-sm font-medium ${isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'}`}>{item.label}</span>
+              <Link key={item.label} href={item.href} className="flex items-center justify-between py-2">
+                <span className={`text-sm font-medium ${
+                  pathname === item.href ? 'text-[#95DE64]' : (isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]')
+                }`}>{item.label}</span>
                 {item.hasDropdown && (
                   <svg
                     className="w-2 h-1"
@@ -140,14 +153,14 @@ const Navbar = () => {
                   >
                     <path
                       d="M1 1L4 3L7 1"
-                      stroke={isLightMode ? "#141414" : "#F0F0F0"}
+                      stroke={pathname === item.href ? "#95DE64" : (isLightMode ? "#141414" : "#F0F0F0")}
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
                     />
                   </svg>
                 )}
-              </div>
+              </Link>
             ))}
             {/* Mobile Join Now Button */}
             <button className="sm:hidden mt-2 w-full bg-[#95DE64] text-black text-sm font-medium leading-[22px] px-6 py-2 rounded-lg hover:bg-[#7bc653] transition-colors h-[38px]">
