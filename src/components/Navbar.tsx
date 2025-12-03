@@ -99,9 +99,9 @@ const Navbar = () => {
           />
 
           {/* Join Now Button */}
-          <button className="hidden sm:flex items-center justify-center bg-[#95DE64] text-black text-sm font-medium leading-[22px] px-6 py-2 rounded-lg hover:bg-[#7bc653] transition-colors min-w-[105px] h-[38px]">
+          <Link href="/join" className="hidden sm:flex items-center justify-center bg-[#95DE64] text-black text-sm font-medium leading-[22px] px-6 py-2 rounded-lg hover:bg-[#7bc653] transition-colors min-w-[105px] h-[38px]">
             Join now
-          </button>
+          </Link>
 
           {/* Mobile Menu Button */}
           <button
@@ -163,9 +163,9 @@ const Navbar = () => {
               </Link>
             ))}
             {/* Mobile Join Now Button */}
-            <button className="sm:hidden mt-2 w-full bg-[#95DE64] text-black text-sm font-medium leading-[22px] px-6 py-2 rounded-lg hover:bg-[#7bc653] transition-colors h-[38px]">
+            <Link href="/join" className="sm:hidden mt-2 w-full bg-[#95DE64] text-black text-sm font-medium leading-[22px] px-6 py-2 rounded-lg hover:bg-[#7bc653] transition-colors h-[38px] flex items-center justify-center">
               Join now
-            </button>
+            </Link>
           </div>
         </div>
       )}

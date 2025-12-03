@@ -23,7 +23,7 @@ const HeroSection = () => {
       <p className={`max-w-[850px] text-center text-sm font-normal leading-[22px] mb-8 sm:mb-10 lg:mb-12 px-4 ${
         isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
       }`}>
-        At Globonexo, we empower European IT and software companies with world-class outstaffing solutions that transform challenges into opportunities. With our headquarters in Germany and a network of development centers across India, Poland, Czech Republic, Ukraine, and Moldova, we provide seamless access to a global talent pool that drives innovation and delivers results.
+        At Globonexo, we empower European IT and software companies with world-class outstaffing solutions that transform challenges into opportunities. With our headquarters in Germany and a network of development center across India, Poland, Czech Republic, Ukraine, and Moldova, we provide seamless access to a global talent pool that drives innovation and delivers results.
       </p>
 
       {/* Video Placeholder */}

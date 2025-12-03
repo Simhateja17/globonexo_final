@@ -52,7 +52,7 @@ const WhyChooseUsSection = () => {
     {
       icon: "🌍",
       title: "Global Talent Pool",
-      description: "Our development centers offer access to top-tier IT professionals from India and Eastern Europe, ready to execute your vision.",
+      description: "Our development center offer access to top-tier IT professionals from India and Eastern Europe, ready to execute your vision.",
     },
     {
       icon: "⚖️",
