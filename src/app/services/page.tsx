@@ -1,0 +1,222 @@
+"use client";
+
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import WhyChooseUsSection from "@/components/WhyChooseUsSection";
+import TestimonialsSection from "@/components/TestimonialsSection";
+import FAQSection from "@/components/FAQSection";
+import { useTheme } from "@/context/ThemeContext";
+import Link from "next/link";
+import Image from "next/image";
+
+interface ContentBlockProps {
+  superheading: string;
+  title: string;
+  paragraphs: string[];
+  ctaText: string;
+  ctaLink: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  isReversed?: boolean;
+  isLightMode?: boolean;
+}
+
+const ContentBlock = ({
+  superheading,
+  title,
+  paragraphs,
+  ctaText,
+  ctaLink,
+  imageSrc,
+  imageAlt = "Placeholder",
+  isReversed = false,
+  isLightMode = false,
+}: ContentBlockProps) => {
+  return (
+    <section className={`w-full py-16 sm:py-20 lg:py-[120px] transition-colors duration-300 ${
+      isLightMode ? 'bg-white' : 'bg-black'
+    }`}>
+      <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
+        <div className={`flex flex-col ${isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-8 lg:gap-10 items-center`}>
+          {/* Text Content */}
+          <div className="flex flex-col gap-5 lg:gap-6 w-full lg:w-[58%]">
+            {/* Superheading */}
+            <p className="font-mono text-xs font-normal leading-5 text-[#95DE64] tracking-wide">
+              {superheading}
+            </p>
+
+            {/* Title */}
+            <h2 className={`text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] max-w-[672px] ${
+              isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
+            }`}>
+              {title}
+            </h2>
+
+            {/* Paragraphs */}
+            <div className={`max-w-[672px] flex flex-col gap-4 text-sm font-normal leading-[22px] ${
+              isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+            }`}>
+              {paragraphs.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
+            </div>
+
+            {/* CTA Button */}
+            <Link
+              href={ctaLink}
+              className="inline-flex items-center justify-center w-fit min-w-[140px] h-[38px] px-6 py-2 bg-[#95DE64] hover:bg-[#7bc653] text-black text-xs font-medium leading-5 tracking-wide uppercase rounded-lg transition-colors duration-200"
+            >
+              {ctaText}
+            </Link>
+          </div>
+
+          {/* Image Placeholder */}
+          <div className="w-full lg:w-[42%] flex justify-center">
+            <div className={`relative w-full max-w-[350px] sm:max-w-[400px] lg:max-w-[448px] aspect-square rounded-xl overflow-hidden ${
+              isLightMode ? 'bg-[#E5E5E5]' : 'bg-[#141414]'
+            }`}>
+              {imageSrc ? (
+                <Image
+                  src={imageSrc}
+                  alt={imageAlt}
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                /* Placeholder Icon */
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <svg
+                    className={`w-16 h-16 sm:w-20 sm:h-20 ${isLightMode ? 'text-[#BFBFBF]' : 'text-[#595959]'}`}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1"
+                  >
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <polyline points="21 15 16 10 5 21" />
+                  </svg>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const ServicesPage = () => {
+  const { theme } = useTheme();
+  const isLightMode = theme === "light";
+
+  return (
+    <main className={`min-h-screen transition-colors duration-300 ${
+      isLightMode ? 'bg-white' : 'bg-black'
+    }`}>
+      <Navbar />
+      
+      {/* Page Header Section */}
+      <section 
+        className="w-full pt-6 sm:pt-7 lg:pt-[30px] pb-10 sm:pb-12 lg:pb-[60px]"
+        style={{
+          background: isLightMode 
+            ? 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%)'
+            : 'linear-gradient(180deg, #000000 0%, #141414 100%)',
+        }}
+      >
+        <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
+          <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10">
+            {/* Breadcrumb */}
+            <div className="flex items-center gap-2">
+              <Link 
+                href="/" 
+                className={`text-sm font-normal leading-[22px] hover:text-[#95DE64] transition-colors ${
+                  isLightMode ? 'text-[#595959]' : 'text-[#8C8C8C]'
+                }`}
+              >
+                Home
+              </Link>
+              <span className={`text-sm font-normal leading-[22px] ${
+                isLightMode ? 'text-[#595959]' : 'text-[#8C8C8C]'
+              }`}>
+                /
+              </span>
+              <Link 
+                href="/services" 
+                className={`text-sm font-normal leading-[22px] hover:text-[#95DE64] transition-colors ${
+                  isLightMode ? 'text-[#595959]' : 'text-[#8C8C8C]'
+                }`}
+              >
+                Services
+              </Link>
+              <span className={`text-sm font-normal leading-[22px] ${
+                isLightMode ? 'text-[#595959]' : 'text-[#8C8C8C]'
+              }`}>
+                /
+              </span>
+              <span className="text-sm font-normal leading-[22px] text-[#95DE64]">
+                Software Testing
+              </span>
+            </div>
+
+            {/* Page Title */}
+            <h1 className={`text-[28px] sm:text-[32px] lg:text-[38px] font-medium leading-tight lg:leading-[46px] ${
+              isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
+            }`}>
+              Software Testing
+            </h1>
+
+            {/* Description */}
+            <p className={`max-w-[1160px] text-sm font-normal leading-[22px] ${
+              isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+            }`}>
+              Although, final stages of the internal network gives a complete experience of The Parameter of Speculative Environment
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Content Block 1 - Image on Right */}
+      <ContentBlock
+        superheading="block small title"
+        title="Block h2 title"
+        paragraphs={[
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis lacus felis. Cras gravida pulvinar auctor. Nunc est dui, volutpat eu arcu sed, egestas commodo nisl. Proin tempus orci a urna fermentum dignissim. Donec rhoncus vel quam ut dignissim. Aenean lacinia eros eros, quis molestie magna congue porta. Mauris lorem enim, tincidunt in nibh eu, placerat hendrerit augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          "Fusce quis lacus felis. Cras gravida pulvinar auctor. Nunc est dui, volutpat eu arcu sed, egestas commodo nisl. Proin tempus orci a urna fermentum dignissim. Donec rhoncus vel quam ut dignissim. Aenean lacinia eros eros, quis molestie magna congue porta. Mauris lorem enim, tincidunt in nibh eu, placerat hendrerit augue."
+        ]}
+        ctaText="CTA BUTTON"
+        ctaLink="#"
+        isReversed={false}
+        isLightMode={isLightMode}
+      />
+
+      {/* Content Block 2 - Image on Left (Mirrored) */}
+      <ContentBlock
+        superheading="block small title"
+        title="Block h2 title"
+        paragraphs={[
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis lacus felis. Cras gravida pulvinar auctor. Nunc est dui, volutpat eu arcu sed, egestas commodo nisl. Proin tempus orci a urna fermentum dignissim. Donec rhoncus vel quam ut dignissim. Aenean lacinia eros eros, quis molestie magna congue porta. Mauris lorem enim, tincidunt in nibh eu, placerat hendrerit augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+          "Fusce quis lacus felis. Cras gravida pulvinar auctor. Nunc est dui, volutpat eu arcu sed, egestas commodo nisl. Proin tempus orci a urna fermentum dignissim. Donec rhoncus vel quam ut dignissim. Aenean lacinia eros eros, quis molestie magna congue porta. Mauris lorem enim, tincidunt in nibh eu, placerat hendrerit augue."
+        ]}
+        ctaText="CTA BUTTON"
+        ctaLink="#"
+        isReversed={true}
+        isLightMode={isLightMode}
+      />
+
+      {/* Why Choose Us Section */}
+      <WhyChooseUsSection />
+
+      {/* Testimonials Section */}
+      <TestimonialsSection />
+
+      {/* FAQ Section */}
+      <FAQSection />
+
+      <Footer />
+    </main>
+  );
+};
+
+export default ServicesPage;
