@@ -133,16 +133,6 @@ const TestimonialsSection = () => {
       {/* Scrolling Cards Container with fade effect */}
       <div className="max-w-[1440px] mx-auto px-[6.15vw] sm:px-10 lg:px-[140px]">
         <div className="relative w-full lg:w-[1160px]">
-          {/* Left Fade Gradient */}
-          <div className={`absolute left-0 top-0 bottom-0 w-[7.7vw] sm:w-[60px] lg:w-[80px] bg-gradient-to-r ${
-            isLightMode ? 'from-white/80' : 'from-black/80'
-          } to-transparent z-10 pointer-events-none`} />
-          
-          {/* Right Fade Gradient */}
-          <div className={`absolute right-0 top-0 bottom-0 w-[7.7vw] sm:w-[60px] lg:w-[80px] bg-gradient-to-l ${
-            isLightMode ? 'from-white/80' : 'from-black/80'
-          } to-transparent z-10 pointer-events-none`} />
-
           {/* Scrolling Container */}
           <div 
             ref={scrollRef}
