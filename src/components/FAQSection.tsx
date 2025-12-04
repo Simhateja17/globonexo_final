@@ -74,8 +74,8 @@ const FAQSection = () => {
       answer: "We have a rigorous vetting process that includes technical assessments, code reviews, and soft skills evaluation. We also provide ongoing performance monitoring and regular check-ins to ensure consistent quality.",
     },
     {
-      question: "What is IT outstaffing and how does it differ from outsourcing?",
-      answer: "IT outstaffing means you hire dedicated developers who work exclusively for you while we handle HR and administrative tasks. Unlike outsourcing, you maintain direct control over the team and their work.",
+      question: "What is IT & AI outstaffing and how does it differ from outsourcing?",
+      answer: "IT & AI outstaffing means you hire dedicated developers who work exclusively for you while we handle HR and administrative tasks. Unlike outsourcing, you maintain direct control over the team and their work.",
     },
     {
       question: "How do you select the developers we will work with?",

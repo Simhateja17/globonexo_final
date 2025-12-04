@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/context/ThemeContext";
 
 export const metadata: Metadata = {
   title: "Globonexo - International IT & AI Expert Hub",
-  description: "At Globonexo, we empower European IT and software companies with world-class outstaffing solutions that transform challenges into opportunities.",
+  description: "At Globonexo, we empower European IT & AI and software companies with world-class outstaffing solutions that transform challenges into opportunities.",
 };
 
 export default function RootLayout({

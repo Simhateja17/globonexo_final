@@ -88,14 +88,14 @@ const ServicesSection = () => {
     },
     {
       icon: "🛠️",
-      title: "IT Helpdesk Services",
-      description: "Reliable 24/7 multilingual IT support tailored to businesses of all sizes. Focused on enhancing customer satisfaction with fast and efficient issue resolution.",
+      title: "IT & AI Helpdesk Services",
+      description: "Reliable 24/7 multilingual IT & AI support tailored to businesses of all sizes. Focused on enhancing customer satisfaction with fast and efficient issue resolution.",
       isGreenTitle: false,
     },
     {
       icon: "🧩",
       title: "Custom Solutions for Unique Needs",
-      description: "Bespoke IT and software solutions designed to address specific challenges and goals. Emphasis on scalability, innovation, and alignment with business strategies.",
+      description: "Bespoke IT & AI and software solutions designed to address specific challenges and goals. Emphasis on scalability, innovation, and alignment with business strategies.",
       isGreenTitle: false,
     },
   ];
@@ -161,7 +161,7 @@ const ServicesSection = () => {
           <p className={`max-w-[1160px] text-sm font-normal leading-[22px] ${
             isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
           }`}>
-            We specialize in outstaffing solutions, including staff augmentation and dedicated teams, alongside software testing, and 24/7 multilingual IT helpdesk services. With expertise in modern technologies like AI, ML, cloud solutions, and a deep understanding of the European market, we deliver tailored solutions that drive innovation and scalability.
+            We specialize in outstaffing solutions, including staff augmentation and dedicated teams, alongside software testing, and 24/7 multilingual IT & AI helpdesk services. With expertise in modern technologies like AI, ML, cloud solutions, and a deep understanding of the European market, we deliver tailored solutions that drive innovation and scalability.
           </p>
         </div>
       </div>

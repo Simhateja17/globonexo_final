@@ -129,7 +129,7 @@ const AboutSection = () => {
               <p className={`text-sm font-normal leading-[22px] ${
                 isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
               }`}>
-                Globonexo is an international IT outstaffing company committed to helping European companies grow faster and smarter. Our founders' proven track record in driving innovation and delivering IT solutions positions us as the trusted choice for outstaffing.
+                Globonexo is an international IT & AI outstaffing company committed to helping European companies grow faster and smarter. Our founders' proven track record in driving innovation and delivering IT & AI solutions positions us as the trusted choice for outstaffing.
               </p>
               <p className={`text-sm font-normal leading-[22px] ${
                 isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
