@@ -16,15 +16,16 @@ interface NavItemProps {
 
 const NavItem = ({ label, href, hasDropdown = true, isLightMode = false, isActive = false }: NavItemProps) => {
   return (
-    <Link href={href} className="flex items-center gap-1 cursor-pointer group">
-      <span className={`text-sm font-medium leading-[22px] group-hover:text-[#95DE64] transition-colors ${
+    <Link href={href} className="flex items-center gap-[0.28vw] cursor-pointer group">
+      {/* Font size: 14px on 1440px = 0.97vw, clamped between 12px and 14px */}
+      <span className={`text-[clamp(12px,0.97vw,14px)] font-medium leading-[1.57] group-hover:text-[#95DE64] transition-colors whitespace-nowrap ${
         isActive ? 'text-[#95DE64]' : (isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]')
       }`}>
         {label}
       </span>
       {hasDropdown && (
         <svg
-          className="w-2 h-1 mt-[2px] transition-transform group-hover:rotate-180"
+          className="w-[0.56vw] min-w-[6px] max-w-[8px] h-auto mt-[2px] transition-transform group-hover:rotate-180"
           viewBox="0 0 8 4"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -59,21 +60,22 @@ const Navbar = () => {
 
   return (
     <nav className={`w-full ${isLightMode ? 'bg-white' : 'bg-black'} transition-colors duration-300`}>
-      <div className="max-w-[1440px] mx-auto h-[70px] flex items-center justify-between px-5 sm:px-10 lg:px-[140px] py-4">
-        {/* Logo */}
+      {/* Desktop: height 70px on 1440px = 4.86vw, padding 140px = 9.72vw */}
+      <div className="max-w-[1440px] mx-auto h-[70px] lg:h-[clamp(60px,4.86vw,70px)] flex items-center justify-between px-5 sm:px-10 lg:px-[9.72vw] py-4 lg:py-[1.11vw]">
+        {/* Logo - 160px width on 1440px = 11.11vw */}
         <Link href="/" className="flex items-center gap-2 flex-shrink-0">
           <Image
             src={isLightMode ? "/globonexo_light_mode.png" : "/globonexo_logo_dark_mode.png"}
             alt="Globonexo Logo"
             width={160}
             height={40}
-            className="h-8 w-auto sm:h-10"
+            className="h-8 w-auto sm:h-10 lg:h-[clamp(32px,2.78vw,40px)] lg:w-auto"
             priority
           />
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center gap-6 xl:gap-8">
+        {/* Desktop Navigation - gap 32px on 1440px = 2.22vw */}
+        <div className="hidden lg:flex items-center gap-[clamp(16px,2.22vw,32px)]">
           {navItems.map((item) => (
             <NavItem 
               key={item.label} 
@@ -87,19 +89,20 @@ const Navbar = () => {
         </div>
 
         {/* Right Side - Light Switch & Join Now */}
-        <div className="flex items-center gap-3 sm:gap-4">
-          {/* Light Switch - 38x38px same as Join Now button height */}
+        {/* Gap: 16px on 1440px = 1.11vw */}
+        <div className="flex items-center gap-3 sm:gap-4 lg:gap-[clamp(12px,1.11vw,16px)]">
+          {/* Light Switch - 38x38px on 1440px = 2.64vw */}
           <Image
             src={isLightMode ? "/light_switch_light_mode.png" : "/light_switch.png"}
             alt="Toggle theme"
             width={38}
             height={38}
-            className="w-[38px] h-[38px] cursor-pointer hover:opacity-80 transition-opacity"
+            className="w-[38px] h-[38px] lg:w-[clamp(30px,2.64vw,38px)] lg:h-[clamp(30px,2.64vw,38px)] cursor-pointer hover:opacity-80 transition-opacity"
             onClick={toggleTheme}
           />
 
-          {/* Join Now Button */}
-          <Link href="/join" className="hidden sm:flex items-center justify-center bg-[#95DE64] text-black text-sm font-medium leading-[22px] px-6 py-2 rounded-lg hover:bg-[#7bc653] transition-colors min-w-[105px] h-[38px]">
+          {/* Join Now Button - px: 24px = 1.67vw, height: 38px = 2.64vw, min-width: 105px = 7.29vw */}
+          <Link href="/join" className="hidden sm:flex items-center justify-center bg-[#95DE64] text-black text-[clamp(12px,0.97vw,14px)] font-medium leading-[1.57] px-6 lg:px-[clamp(16px,1.67vw,24px)] py-2 rounded-lg lg:rounded-[clamp(6px,0.56vw,8px)] hover:bg-[#7bc653] transition-colors min-w-[105px] lg:min-w-[clamp(90px,7.29vw,105px)] h-[38px] lg:h-[clamp(32px,2.64vw,38px)] whitespace-nowrap">
             Join now
           </Link>
 
