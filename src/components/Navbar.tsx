@@ -61,21 +61,21 @@ const Navbar = () => {
   return (
     <nav className={`w-full ${isLightMode ? 'bg-white' : 'bg-black'} transition-colors duration-300`}>
       {/* Desktop: height 70px on 1440px = 4.86vw, padding 140px = 9.72vw */}
-      <div className="max-w-[1440px] mx-auto h-[70px] lg:h-[clamp(60px,4.86vw,70px)] flex items-center justify-between px-5 sm:px-10 lg:px-[9.72vw] py-4 lg:py-[1.11vw]">
+      <div className="max-w-[1440px] mx-auto h-[70px] lg:h-[clamp(60px,4.86vw,70px)] flex items-center justify-between px-5 sm:px-10 lg:px-[9.72vw]">
         {/* Logo - 160px width on 1440px = 11.11vw */}
-        <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+        <Link href="/" className="flex items-center flex-shrink-0 h-full">
           <Image
             src={isLightMode ? "/globonexo_light_mode.png" : "/globonexo_logo_dark_mode.png"}
             alt="Globonexo Logo"
             width={160}
             height={40}
-            className="h-8 w-auto sm:h-10 lg:h-[clamp(32px,2.78vw,40px)] lg:w-auto"
+            className="h-8 w-auto sm:h-10 lg:h-[clamp(32px,2.78vw,40px)] lg:w-auto object-contain"
             priority
           />
         </Link>
 
         {/* Desktop Navigation - gap 32px on 1440px = 2.22vw */}
-        <div className="hidden lg:flex items-center gap-[clamp(16px,2.22vw,32px)]">
+        <div className="hidden lg:flex items-center h-full gap-[clamp(16px,2.22vw,32px)]">
           {navItems.map((item) => (
             <NavItem 
               key={item.label} 
@@ -90,7 +90,7 @@ const Navbar = () => {
 
         {/* Right Side - Light Switch & Join Now */}
         {/* Gap: 16px on 1440px = 1.11vw */}
-        <div className="flex items-center gap-3 sm:gap-4 lg:gap-[clamp(12px,1.11vw,16px)]">
+        <div className="flex items-center h-full gap-3 sm:gap-4 lg:gap-[clamp(12px,1.11vw,16px)]">
           {/* Light Switch - 38x38px on 1440px = 2.64vw */}
           <Image
             src={isLightMode ? "/light_switch_light_mode.png" : "/light_switch.png"}
