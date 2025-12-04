@@ -17,13 +17,13 @@ const HeroSection = () => {
       isLightMode ? 'bg-white' : 'bg-black'
     }`}>
       {/* Main Heading - Two Lines - Always stays in 2 lines on all screen sizes */}
-      <h1 className="w-full max-w-[1200px] text-center mb-6 sm:mb-8 px-2">
-        <span className={`block text-[7vw] sm:text-4xl lg:text-[52px] xl:text-[60px] font-medium leading-[1.15] sm:leading-tight lg:leading-[1.2] whitespace-nowrap ${
+      <h1 className="w-full max-w-[1200px] text-center mb-6 sm:mb-8">
+        <span className={`block text-[5.8vw] sm:text-4xl lg:text-[52px] xl:text-[60px] font-medium leading-[1.2] sm:leading-tight lg:leading-[1.2] ${
           isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
         }`}>
           International <span className="text-[#95DE64]">IT & AI Expert Hub</span>
         </span>
-        <span className={`block text-[6.5vw] sm:text-4xl lg:text-[52px] xl:text-[60px] font-medium leading-[1.15] sm:leading-tight lg:leading-[1.2] mt-1 sm:mt-2 whitespace-nowrap ${
+        <span className={`block text-[5.8vw] sm:text-4xl lg:text-[52px] xl:text-[60px] font-medium leading-[1.2] sm:leading-tight lg:leading-[1.2] mt-1 sm:mt-2 ${
           isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
         }`}>
           For Your <span className="text-[#95DE64]">Universal Success</span>
