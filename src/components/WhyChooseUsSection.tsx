@@ -71,31 +71,26 @@ const WhyChooseUsSection = () => {
     },
   ];
 
-  // Auto-scroll animation - only on desktop
+  // Auto-scroll animation - works on both desktop and mobile
   useEffect(() => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
-    // Check if device supports touch (mobile)
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    
-    // Don't auto-scroll on mobile devices
-    if (isTouchDevice) return;
-
     let animationId: number;
-    let scrollPosition = scrollContainer.scrollLeft;
     const scrollSpeed = 0.5;
 
     const animate = () => {
       if (!isInteracting && scrollContainer) {
-        scrollPosition += scrollSpeed;
+        // Always read current scroll position to continue from where user left off
+        let currentScroll = scrollContainer.scrollLeft;
+        currentScroll += scrollSpeed;
         
         const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-        if (scrollPosition >= maxScroll) {
-          scrollPosition = 0;
+        if (currentScroll >= maxScroll) {
+          currentScroll = 0;
         }
         
-        scrollContainer.scrollLeft = scrollPosition;
+        scrollContainer.scrollLeft = currentScroll;
       }
       animationId = requestAnimationFrame(animate);
     };
