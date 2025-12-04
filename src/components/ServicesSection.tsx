@@ -69,7 +69,7 @@ const ServiceCard = ({ icon, title, description, isGreenTitle = false, isLightMo
 
 const ServicesSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
+  const [isInteracting, setIsInteracting] = useState(false);
   const { theme } = useTheme();
   const isLightMode = theme === "light";
 
@@ -100,20 +100,25 @@ const ServicesSection = () => {
     },
   ];
 
-  // Auto-scroll animation
+  // Auto-scroll animation - only on desktop
   useEffect(() => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
+    // Check if device supports touch (mobile)
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // Don't auto-scroll on mobile devices
+    if (isTouchDevice) return;
+
     let animationId: number;
     let scrollPosition = 0;
-    const scrollSpeed = 0.5; // Adjust speed here
+    const scrollSpeed = 0.5;
 
     const animate = () => {
-      if (!isHovered && scrollContainer) {
+      if (!isInteracting && scrollContainer) {
         scrollPosition += scrollSpeed;
         
-        // Reset scroll when reaching the end (loop effect)
         const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
         if (scrollPosition >= maxScroll) {
           scrollPosition = 0;
@@ -129,7 +134,7 @@ const ServicesSection = () => {
     return () => {
       cancelAnimationFrame(animationId);
     };
-  }, [isHovered]);
+  }, [isInteracting]);
 
   // Mobile section: 390px width, 60px vertical padding = 15.4%, 24px horizontal padding = 6.15%
   // Gap between header and cards: 40px on 390px = 10.25%
@@ -177,12 +182,15 @@ const ServicesSection = () => {
           {/* Scrolling Container */}
           <div 
             ref={scrollRef}
-            className="flex gap-[4vw] sm:gap-4 lg:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            className="flex gap-[4vw] sm:gap-4 lg:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing touch-pan-x"
+            onMouseEnter={() => setIsInteracting(true)}
+            onMouseLeave={() => setIsInteracting(false)}
+            onTouchStart={() => setIsInteracting(true)}
+            onTouchEnd={() => setIsInteracting(false)}
             style={{
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch',
             }}
           >
             {/* Render cards twice for seamless loop effect */}

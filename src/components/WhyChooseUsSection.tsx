@@ -39,7 +39,7 @@ const WhyChooseCard = ({ icon, title, description, isLightMode = false }: WhyCho
 
 const WhyChooseUsSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState(false);
+  const [isInteracting, setIsInteracting] = useState(false);
   const { theme } = useTheme();
   const isLightMode = theme === "light";
 
@@ -71,17 +71,23 @@ const WhyChooseUsSection = () => {
     },
   ];
 
-  // Auto-scroll animation
+  // Auto-scroll animation - only on desktop
   useEffect(() => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
+
+    // Check if device supports touch (mobile)
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // Don't auto-scroll on mobile devices
+    if (isTouchDevice) return;
 
     let animationId: number;
     let scrollPosition = scrollContainer.scrollLeft;
     const scrollSpeed = 0.5;
 
     const animate = () => {
-      if (!isHovered && scrollContainer) {
+      if (!isInteracting && scrollContainer) {
         scrollPosition += scrollSpeed;
         
         const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
@@ -99,7 +105,7 @@ const WhyChooseUsSection = () => {
     return () => {
       cancelAnimationFrame(animationId);
     };
-  }, [isHovered]);
+  }, [isInteracting]);
 
   return (
     <section className={`w-full py-16 sm:py-20 lg:py-[120px] transition-colors duration-300 ${
@@ -139,12 +145,15 @@ const WhyChooseUsSection = () => {
           {/* Scrolling Container */}
           <div 
             ref={scrollRef}
-            className="flex gap-4 lg:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            className="flex gap-4 lg:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing touch-pan-x"
+            onMouseEnter={() => setIsInteracting(true)}
+            onMouseLeave={() => setIsInteracting(false)}
+            onTouchStart={() => setIsInteracting(true)}
+            onTouchEnd={() => setIsInteracting(false)}
             style={{
               scrollbarWidth: 'none',
               msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch',
             }}
           >
             {/* Render cards twice for seamless loop effect */}
