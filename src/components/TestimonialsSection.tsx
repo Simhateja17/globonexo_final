@@ -11,8 +11,10 @@ interface TestimonialCardProps {
 }
 
 const TestimonialCard = ({ quote, name, title, isLightMode = false }: TestimonialCardProps) => {
+  // Mobile: 300x326 on 390px screen = 76.9% width, 83.6% height ratio
+  // Padding: 24px on 390px = 6.15% | Gap: 24px = 6.15%
   return (
-    <div className={`flex-shrink-0 w-[280px] sm:w-[320px] lg:w-[370px] h-[260px] sm:h-[272px] lg:h-[282px] rounded-xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 ${
+    <div className={`flex-shrink-0 w-[76.9vw] sm:w-[320px] lg:w-[370px] min-h-[83.6vw] sm:min-h-[280px] lg:min-h-[282px] rounded-[3vw] sm:rounded-xl p-[6.15vw] sm:p-5 lg:p-6 flex flex-col gap-[6.15vw] sm:gap-5 lg:gap-6 ${
       isLightMode ? 'bg-[#F0F0F0]' : 'bg-[#141414]'
     }`}>
       {/* Quote */}
@@ -23,7 +25,7 @@ const TestimonialCard = ({ quote, name, title, isLightMode = false }: Testimonia
       </p>
 
       {/* Author Info */}
-      <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1 mt-auto">
         {/* Name */}
         <h3 className={`text-xl sm:text-[22px] lg:text-2xl font-medium leading-8 ${
           isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
@@ -101,12 +103,14 @@ const TestimonialsSection = () => {
     };
   }, [isHovered]);
 
+  // Mobile section: 390px width, 60px vertical padding = 15.4%, 24px horizontal padding = 6.15%
+  // Gap between header and cards: 40px on 390px = 10.25%
   return (
-    <section className={`w-full py-16 sm:py-20 lg:py-[120px] transition-colors duration-300 ${
+    <section className={`w-full py-[15.4vw] sm:py-20 lg:py-[120px] transition-colors duration-300 ${
       isLightMode ? 'bg-white' : 'bg-black'
     }`}>
       {/* Header Content */}
-      <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px] mb-8 lg:mb-10">
+      <div className="max-w-[1440px] mx-auto px-[6.15vw] sm:px-10 lg:px-[140px] mb-[10.25vw] sm:mb-8 lg:mb-10">
         {/* Superheading */}
         <p className="font-mono text-xs font-normal leading-5 text-[#95DE64] mb-2 tracking-wide">
           testimonials
@@ -128,22 +132,22 @@ const TestimonialsSection = () => {
       </div>
 
       {/* Scrolling Cards Container with fade effect */}
-      <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
+      <div className="max-w-[1440px] mx-auto px-[6.15vw] sm:px-10 lg:px-[140px]">
         <div className="relative w-full lg:w-[1160px]">
           {/* Left Fade Gradient */}
-          <div className={`absolute left-0 top-0 bottom-0 w-[40px] sm:w-[60px] lg:w-[80px] bg-gradient-to-r ${
+          <div className={`absolute left-0 top-0 bottom-0 w-[7.7vw] sm:w-[60px] lg:w-[80px] bg-gradient-to-r ${
             isLightMode ? 'from-white' : 'from-black'
           } to-transparent z-10 pointer-events-none`} />
           
           {/* Right Fade Gradient */}
-          <div className={`absolute right-0 top-0 bottom-0 w-[40px] sm:w-[60px] lg:w-[80px] bg-gradient-to-l ${
+          <div className={`absolute right-0 top-0 bottom-0 w-[7.7vw] sm:w-[60px] lg:w-[80px] bg-gradient-to-l ${
             isLightMode ? 'from-white' : 'from-black'
           } to-transparent z-10 pointer-events-none`} />
 
           {/* Scrolling Container */}
           <div 
             ref={scrollRef}
-            className="flex gap-4 lg:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
+            className="flex gap-[4vw] sm:gap-5 lg:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             style={{
