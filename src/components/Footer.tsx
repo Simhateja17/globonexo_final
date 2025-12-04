@@ -22,9 +22,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className={`w-full py-8 sm:py-10 lg:py-10 transition-colors duration-300 ${
-      isLightMode ? 'bg-[#F5F5F5]' : 'bg-black'
-    }`}>
+    <footer className="w-full py-8 sm:py-10 lg:py-10 transition-colors duration-300">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-24">
           {/* Logo and Description */}

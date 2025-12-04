@@ -13,9 +13,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className={`w-full flex flex-col items-center px-5 sm:px-10 lg:px-[140px] pt-12 sm:pt-16 lg:pt-24 pb-12 sm:pb-16 lg:pb-20 transition-colors duration-300 ${
-      isLightMode ? 'bg-white' : 'bg-black'
-    }`}>
+    <section className="w-full flex flex-col items-center px-5 sm:px-10 lg:px-[140px] pt-12 sm:pt-16 lg:pt-24 pb-12 sm:pb-16 lg:pb-20">
       {/* Main Heading - Two Lines - Always stays in 2 lines on all screen sizes */}
       <h1 className="w-full max-w-[1200px] text-center mb-6 sm:mb-8">
         <span className={`block text-[5.8vw] sm:text-4xl lg:text-[52px] xl:text-[60px] font-medium leading-[1.2] sm:leading-tight lg:leading-[1.2] ${
@@ -41,16 +39,16 @@ const HeroSection = () => {
       <div className="flex flex-col sm:flex-row items-center gap-4 mb-12 sm:mb-16 lg:mb-20">
         <Link 
           href="/join" 
-          className="bg-[#95DE64] text-black text-sm font-medium leading-[22px] px-8 py-3 rounded-lg hover:bg-[#7bc653] transition-colors min-w-[160px] h-[44px] flex items-center justify-center"
+          className="glass-button text-black text-sm font-medium leading-[22px] px-8 py-3 rounded-xl min-w-[160px] h-[44px] flex items-center justify-center"
         >
           Get Started
         </Link>
         <Link 
           href="/contact" 
-          className={`border text-sm font-medium leading-[22px] px-8 py-3 rounded-lg transition-colors min-w-[160px] h-[44px] flex items-center justify-center ${
+          className={`text-sm font-medium leading-[22px] px-8 py-3 rounded-xl min-w-[160px] h-[44px] flex items-center justify-center ${
             isLightMode 
-              ? 'border-[#141414] text-[#141414] hover:bg-[#141414] hover:text-white' 
-              : 'border-[#F0F0F0] text-[#F0F0F0] hover:bg-[#F0F0F0] hover:text-black'
+              ? 'glass-card-light text-[#141414] hover:text-[#95DE64]' 
+              : 'glass-button-outline text-[#F0F0F0] hover:text-[#95DE64]'
           }`}
         >
           Book A Call

@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import LiquidBackground from "@/components/LiquidBackground";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQSection from "@/components/FAQSection";
@@ -33,9 +34,7 @@ const ContentBlock = ({
   isLightMode = false,
 }: ContentBlockProps) => {
   return (
-    <section className={`w-full py-16 sm:py-20 lg:py-[120px] transition-colors duration-300 ${
-      isLightMode ? 'bg-white' : 'bg-black'
-    }`}>
+    <section className="w-full py-16 sm:py-20 lg:py-[120px]">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
         <div className={`flex flex-col ${isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'} gap-8 lg:gap-10 items-center`}>
           {/* Text Content */}
@@ -64,7 +63,7 @@ const ContentBlock = ({
             {/* CTA Button */}
             <Link
               href={ctaLink}
-              className="inline-flex items-center justify-center w-fit min-w-[140px] h-[38px] px-6 py-2 bg-[#95DE64] hover:bg-[#7bc653] text-black text-xs font-medium leading-5 tracking-wide uppercase rounded-lg transition-colors duration-200"
+              className="inline-flex items-center justify-center w-fit min-w-[140px] h-[38px] px-6 py-2 glass-button text-black text-xs font-medium leading-5 tracking-wide uppercase rounded-xl transition-all duration-200"
             >
               {ctaText}
             </Link>
@@ -72,8 +71,8 @@ const ContentBlock = ({
 
           {/* Image Placeholder */}
           <div className="w-full lg:w-[42%] flex justify-center">
-            <div className={`relative w-full max-w-[350px] sm:max-w-[400px] lg:max-w-[448px] aspect-square rounded-xl overflow-hidden ${
-              isLightMode ? 'bg-[#E5E5E5]' : 'bg-[#141414]'
+            <div className={`relative w-full max-w-[350px] sm:max-w-[400px] lg:max-w-[448px] aspect-square rounded-2xl overflow-hidden ${
+              isLightMode ? 'glass-card-light' : 'glass-card'
             }`}>
               {imageSrc ? (
                 <Image
@@ -111,19 +110,14 @@ const ServicesPage = () => {
   const isLightMode = theme === "light";
 
   return (
-    <main className={`min-h-screen transition-colors duration-300 ${
-      isLightMode ? 'bg-white' : 'bg-black'
-    }`}>
+    <main className="min-h-screen relative overflow-hidden">
+      <LiquidBackground />
+      <div className="relative z-10">
       <Navbar />
       
       {/* Page Header Section */}
       <section 
         className="w-full pt-6 sm:pt-7 lg:pt-[30px] pb-10 sm:pb-12 lg:pb-[60px]"
-        style={{
-          background: isLightMode 
-            ? 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%)'
-            : 'linear-gradient(180deg, #000000 0%, #141414 100%)',
-        }}
       >
         <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
           <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10">
@@ -215,6 +209,7 @@ const ServicesPage = () => {
       <FAQSection />
 
       <Footer />
+      </div>
     </main>
   );
 };

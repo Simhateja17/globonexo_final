@@ -37,12 +37,7 @@ const ContactSection = () => {
 
   return (
     <section 
-      className="w-full py-16 sm:py-20 lg:py-[120px] transition-colors duration-300"
-      style={{
-        background: isLightMode 
-          ? 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%)'
-          : 'linear-gradient(180deg, #000000 0%, #141414 100%)',
-      }}
+      className="w-full py-16 sm:py-20 lg:py-[120px]"
     >
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
         {/* Header */}
@@ -70,8 +65,8 @@ const ContactSection = () => {
         {/* Content - Contact Info + Form */}
         <div className="flex flex-col lg:flex-row gap-6 max-w-[1160px]">
           {/* Contact Info Card */}
-          <div className={`w-full lg:w-[370px] rounded-xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 ${
-            isLightMode ? 'bg-[#F0F0F0]' : 'bg-[#141414]'
+          <div className={`w-full lg:w-[370px] rounded-2xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 ${
+            isLightMode ? 'glass-card-light' : 'glass-card'
           }`}>
             {/* Title */}
             <h3 className={`text-xl lg:text-2xl font-medium leading-8 ${
@@ -153,8 +148,10 @@ const ContactSection = () => {
                 <a
                   key={index}
                   href={social.href}
-                  className={`w-9 h-9 flex items-center justify-center rounded-lg p-2 transition-colors ${
-                    isLightMode ? 'bg-[#E5E5E5] hover:bg-[#D9D9D9]' : 'bg-[#1F1F1F] hover:bg-[#2a2a2a]'
+                  className={`w-9 h-9 flex items-center justify-center rounded-lg p-2 transition-all ${
+                    isLightMode 
+                      ? 'bg-white/50 hover:bg-white/70 backdrop-blur-sm border border-white/30' 
+                      : 'bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/10'
                   }`}
                 >
                   <Image
@@ -183,10 +180,10 @@ const ContactSection = () => {
                     placeholder="Name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={`w-full h-[59.5px] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] outline-none focus:ring-1 focus:ring-[#95DE64] transition-all ${
+                    className={`w-full h-[59.5px] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] outline-none transition-all ${
                       isLightMode 
-                        ? 'bg-[#D9D9D9] text-[#141414] placeholder-[#595959]' 
-                        : 'bg-[#1F1F1F] text-[#F0F0F0] placeholder-[#BFBFBF]'
+                        ? 'glass-input-light text-[#141414]' 
+                        : 'glass-input text-[#F0F0F0]'
                     }`}
                   />
 
@@ -197,10 +194,10 @@ const ContactSection = () => {
                     placeholder="Subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    className={`w-full h-[59.5px] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] outline-none focus:ring-1 focus:ring-[#95DE64] transition-all ${
+                    className={`w-full h-[59.5px] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] outline-none transition-all ${
                       isLightMode 
-                        ? 'bg-[#D9D9D9] text-[#141414] placeholder-[#595959]' 
-                        : 'bg-[#1F1F1F] text-[#F0F0F0] placeholder-[#BFBFBF]'
+                        ? 'glass-input-light text-[#141414]' 
+                        : 'glass-input text-[#F0F0F0]'
                     }`}
                   />
 
@@ -211,10 +208,10 @@ const ContactSection = () => {
                     placeholder="Email"
                     value={formData.email}
                     onChange={handleChange}
-                    className={`w-full h-[59.5px] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] outline-none focus:ring-1 focus:ring-[#95DE64] transition-all ${
+                    className={`w-full h-[59.5px] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] outline-none transition-all ${
                       isLightMode 
-                        ? 'bg-[#D9D9D9] text-[#141414] placeholder-[#595959]' 
-                        : 'bg-[#1F1F1F] text-[#F0F0F0] placeholder-[#BFBFBF]'
+                        ? 'glass-input-light text-[#141414]' 
+                        : 'glass-input text-[#F0F0F0]'
                     }`}
                   />
                 </div>
@@ -226,10 +223,10 @@ const ContactSection = () => {
                     placeholder="Message"
                     value={formData.message}
                     onChange={handleChange}
-                    className={`w-full h-[180px] lg:h-[226.5px] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] outline-none focus:ring-1 focus:ring-[#95DE64] transition-all resize-none ${
+                    className={`w-full h-[180px] lg:h-[226.5px] rounded-xl px-6 py-4 text-sm font-normal leading-[22px] outline-none transition-all resize-none ${
                       isLightMode 
-                        ? 'bg-[#D9D9D9] text-[#141414] placeholder-[#595959]' 
-                        : 'bg-[#1F1F1F] text-[#F0F0F0] placeholder-[#BFBFBF]'
+                        ? 'glass-input-light text-[#141414]' 
+                        : 'glass-input text-[#F0F0F0]'
                     }`}
                   />
                 </div>
@@ -238,7 +235,7 @@ const ContactSection = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full h-[59.5px] border border-[#95DE64] rounded-lg flex items-center justify-center text-[#95DE64] text-sm font-medium leading-[22px] hover:bg-[#95DE64] hover:text-black transition-colors"
+                className="w-full h-[59.5px] glass-button-outline border border-[#95DE64] rounded-xl flex items-center justify-center text-[#95DE64] text-sm font-medium leading-[22px] hover:glass-button hover:text-black transition-all"
               >
                 Send now
               </button>

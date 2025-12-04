@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import LiquidBackground from "@/components/LiquidBackground";
 import FAQSection from "@/components/FAQSection";
 import { useTheme } from "@/context/ThemeContext";
 import Link from "next/link";
@@ -60,9 +61,9 @@ const BlogPage = () => {
   const otherBlogs = blogs.slice(1, 4);
 
   return (
-    <main className={`min-h-screen transition-colors duration-300 ${
-      isLightMode ? 'bg-white' : 'bg-black'
-    }`}>
+    <main className="min-h-screen relative overflow-hidden">
+      <LiquidBackground />
+      <div className="relative z-10">
       <Navbar />
       
       {/* Page Header Section - Proportional padding based on viewport */}
@@ -71,9 +72,6 @@ const BlogPage = () => {
         style={{
           paddingTop: 'clamp(24px, 2.08vw, 30px)',
           paddingBottom: 'clamp(40px, 4.17vw, 60px)',
-          background: isLightMode 
-            ? 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%)'
-            : 'linear-gradient(180deg, #000000 0%, #141414 100%)',
         }}
       >
         <div 
@@ -159,9 +157,7 @@ const BlogPage = () => {
 
       {/* Blog Content Section - Proportional padding */}
       <section 
-        className={`w-full transition-colors duration-300 ${
-          isLightMode ? 'bg-white' : 'bg-black'
-        }`}
+        className="w-full"
         style={{
           paddingTop: 'clamp(64px, 8.33vw, 120px)',
           paddingBottom: 'clamp(64px, 8.33vw, 120px)',
@@ -181,10 +177,10 @@ const BlogPage = () => {
           >
             {/* Featured Blog (Most Recent) */}
             <div 
-              className={`w-full overflow-hidden flex flex-col lg:flex-row ${
-                isLightMode ? 'bg-[#F5F5F5]' : 'bg-[#141414]'
+              className={`w-full overflow-hidden flex flex-col lg:flex-row glass-shimmer ${
+                isLightMode ? 'glass-card-light' : 'glass-card'
               }`}
-              style={{ borderRadius: 'clamp(10px, 0.83vw, 12px)' }}
+              style={{ borderRadius: '20px' }}
             >
               {/* Featured Image - Proportional height */}
               <div 
@@ -327,10 +323,10 @@ const BlogPage = () => {
               {otherBlogs.map((blog) => (
                 <div 
                   key={blog.id}
-                  className={`overflow-hidden flex flex-col ${
-                    isLightMode ? 'bg-[#F5F5F5]' : 'bg-[#141414]'
+                  className={`overflow-hidden flex flex-col glass-shimmer ${
+                    isLightMode ? 'glass-card-light' : 'glass-card'
                   }`}
-                  style={{ borderRadius: 'clamp(10px, 0.83vw, 12px)' }}
+                  style={{ borderRadius: '20px' }}
                 >
                   {/* Blog Image - Proportional aspect ratio maintained */}
                   <div 
@@ -459,6 +455,7 @@ const BlogPage = () => {
 
       <FAQSection />
       <Footer />
+      </div>
     </main>
   );
 };

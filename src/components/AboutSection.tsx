@@ -61,8 +61,8 @@ const StatCard = ({ value, label, isLightMode = false }: StatCardProps) => {
   return (
     <div
       ref={cardRef}
-      className={`w-full sm:w-[calc(50%-12px)] lg:w-[173.5px] h-[140px] sm:h-[160px] lg:h-[173.5px] rounded-xl p-4 sm:p-5 lg:p-6 flex flex-col items-center justify-center gap-2 ${
-        isLightMode ? 'bg-[#E5E5E5]' : 'bg-[#1F1F1F]'
+      className={`w-full sm:w-[calc(50%-12px)] lg:w-[173.5px] h-[140px] sm:h-[160px] lg:h-[173.5px] rounded-2xl p-4 sm:p-5 lg:p-6 flex flex-col items-center justify-center gap-2 glass-shimmer ${
+        isLightMode ? 'glass-card-light' : 'glass-card'
       }`}
     >
       <span className={`text-3xl sm:text-4xl lg:text-[48px] font-black leading-[46px] text-center ${
@@ -92,12 +92,7 @@ const AboutSection = () => {
 
   return (
     <section 
-      className="w-full py-12 sm:py-16 lg:py-20 transition-colors duration-300"
-      style={{
-        background: isLightMode 
-          ? 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%)'
-          : 'linear-gradient(180deg, #000000 0%, #141414 100%)',
-      }}
+      className="w-full py-12 sm:py-16 lg:py-20"
     >
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16 items-start">

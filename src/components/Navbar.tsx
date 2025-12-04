@@ -59,7 +59,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`w-full ${isLightMode ? 'bg-white' : 'bg-black'} transition-colors duration-300`}>
+    <nav className={`w-full sticky top-0 z-50 transition-colors duration-300 ${isLightMode ? 'glass-navbar-light' : 'glass-navbar'}`}>
       {/* Desktop: height 70px on 1440px = 4.86vw, padding 140px = 9.72vw */}
       <div className="max-w-[1440px] mx-auto h-[70px] lg:h-[clamp(60px,4.86vw,70px)] flex items-center justify-between px-5 sm:px-10 lg:px-[9.72vw]">
         {/* Logo - 160px width on 1440px = 11.11vw */}
@@ -140,7 +140,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className={`lg:hidden ${isLightMode ? 'bg-white border-gray-200' : 'bg-black border-gray-800'} border-t px-5 py-4`}>
+        <div className={`lg:hidden border-t px-5 py-4 ${isLightMode ? 'glass-navbar-light border-gray-200/50' : 'glass-navbar border-gray-800/50'}`}>
           <div className="flex flex-col gap-4">
             {navItems.map((item) => (
               <Link key={item.label} href={item.href} className="flex items-center justify-between py-2">
@@ -166,7 +166,7 @@ const Navbar = () => {
               </Link>
             ))}
             {/* Mobile Join Now Button */}
-            <Link href="/join" className="sm:hidden mt-2 w-full bg-[#95DE64] text-black text-sm font-medium leading-[22px] px-6 py-2 rounded-lg hover:bg-[#7bc653] transition-colors h-[38px] flex items-center justify-center">
+            <Link href="/join" className="sm:hidden mt-2 w-full glass-button text-black text-sm font-medium leading-[22px] px-6 py-2 rounded-xl h-[38px] flex items-center justify-center">
               Join now
             </Link>
           </div>

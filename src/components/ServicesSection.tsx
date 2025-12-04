@@ -16,8 +16,8 @@ const ServiceCard = ({ icon, title, description, isGreenTitle = false, isLightMo
   // Mobile: 300x358 on 390px screen = 76.9% width, 91.8% height ratio
   // Padding: 24px on 390px = 6.15% | Gap: 24px = 6.15% | Border-radius: 12px = 3.08%
   return (
-    <div className={`flex-shrink-0 w-[76.9vw] sm:w-[320px] lg:w-[370px] min-h-[91.8vw] sm:min-h-[340px] lg:min-h-[358px] rounded-[3.08vw] sm:rounded-xl p-[6.15vw] sm:p-5 lg:p-6 flex flex-col gap-[6.15vw] sm:gap-5 lg:gap-6 ${
-      isLightMode ? 'bg-[#F0F0F0]' : 'bg-[#141414]'
+    <div className={`flex-shrink-0 w-[76.9vw] sm:w-[320px] lg:w-[370px] min-h-[91.8vw] sm:min-h-[340px] lg:min-h-[358px] rounded-[3.08vw] sm:rounded-2xl lg:rounded-3xl p-[6.15vw] sm:p-5 lg:p-6 flex flex-col gap-[6.15vw] sm:gap-5 lg:gap-6 glass-shimmer ${
+      isLightMode ? 'glass-card-light' : 'glass-card'
     }`}>
       {/* Icon */}
       <div className="text-[12.3vw] sm:text-5xl lg:text-6xl h-[12.3vw] sm:h-[50px] lg:h-[64px] flex items-center">
@@ -134,9 +134,7 @@ const ServicesSection = () => {
   // Mobile section: 390px width, 60px vertical padding = 15.4%, 24px horizontal padding = 6.15%
   // Gap between header and cards: 40px on 390px = 10.25%
   return (
-    <section className={`w-full py-[15.4vw] sm:py-16 lg:py-20 transition-colors duration-300 ${
-      isLightMode ? 'bg-white' : 'bg-black'
-    }`}>
+    <section className="w-full py-[15.4vw] sm:py-16 lg:py-20">
       <div className="max-w-[1440px] mx-auto px-[6.15vw] sm:px-10 lg:px-[140px]">
         {/* Section Header */}
         <div className="mb-[10.25vw] sm:mb-8 lg:mb-12">
@@ -166,12 +164,12 @@ const ServicesSection = () => {
         <div className="relative w-full lg:w-[1160px] mx-auto">
           {/* Left Fade Gradient */}
           <div className={`absolute left-0 top-0 bottom-0 w-[7.7vw] sm:w-[80px] lg:w-[120px] bg-gradient-to-r ${
-            isLightMode ? 'from-white' : 'from-black'
+            isLightMode ? 'from-white/80' : 'from-black/80'
           } to-transparent z-10 pointer-events-none`} />
           
           {/* Right Fade Gradient */}
           <div className={`absolute right-0 top-0 bottom-0 w-[7.7vw] sm:w-[80px] lg:w-[120px] bg-gradient-to-l ${
-            isLightMode ? 'from-white' : 'from-black'
+            isLightMode ? 'from-white/80' : 'from-black/80'
           } to-transparent z-10 pointer-events-none`} />
 
           {/* Scrolling Container */}

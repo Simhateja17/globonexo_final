@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import LiquidBackground from "@/components/LiquidBackground";
 import { useTheme } from "@/context/ThemeContext";
 import Link from "next/link";
 import { useState } from "react";
@@ -107,9 +108,9 @@ const GlobalPresencePage = () => {
   const [hoveredLocation, setHoveredLocation] = useState<string | null>(null);
 
   return (
-    <main className={`min-h-screen transition-colors duration-300 ${
-      isLightMode ? 'bg-white' : 'bg-black'
-    }`}>
+    <main className="min-h-screen relative overflow-hidden">
+      <LiquidBackground />
+      <div className="relative z-10">
       <Navbar />
       
       {/* Page Header Section */}
@@ -118,9 +119,6 @@ const GlobalPresencePage = () => {
         style={{
           paddingTop: 'clamp(24px, 2.08vw, 30px)',
           paddingBottom: 'clamp(40px, 4.17vw, 60px)',
-          background: isLightMode 
-            ? 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%)'
-            : 'linear-gradient(180deg, #000000 0%, #141414 100%)',
         }}
       >
         <div 
@@ -353,6 +351,7 @@ const GlobalPresencePage = () => {
       </section>
 
       <Footer />
+      </div>
     </main>
   );
 };

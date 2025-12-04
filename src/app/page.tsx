@@ -7,19 +7,23 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQSection from "@/components/FAQSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import LiquidBackground from "@/components/LiquidBackground";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black">
-      <Navbar />
-      <HeroSection />
-      <ServicesSection />
-      <AboutSection />
-      <WhyChooseUsSection />
-      <TestimonialsSection />
-      <FAQSection />
-      <ContactSection />
-      <Footer />
+    <main className="min-h-screen relative overflow-hidden">
+      <LiquidBackground />
+      <div className="relative z-10">
+        <Navbar />
+        <HeroSection />
+        <ServicesSection />
+        <AboutSection />
+        <WhyChooseUsSection />
+        <TestimonialsSection />
+        <FAQSection />
+        <ContactSection />
+        <Footer />
+      </div>
     </main>
   );
 }

@@ -14,8 +14,8 @@ interface FAQItemProps {
 const FAQItem = ({ question, answer, isOpen, onClick, isLightMode = false }: FAQItemProps) => {
   return (
     <div 
-      className={`w-full rounded-xl p-5 lg:p-6 cursor-pointer transition-all duration-300 ${
-        isLightMode ? 'bg-[#F0F0F0]' : 'bg-[#141414]'
+      className={`w-full rounded-2xl p-5 lg:p-6 cursor-pointer transition-all duration-300 ${
+        isLightMode ? 'glass-card-light' : 'glass-card'
       }`}
       onClick={onClick}
     >
@@ -139,9 +139,7 @@ const FAQSection = () => {
   };
 
   return (
-    <section className={`w-full py-16 sm:py-20 lg:py-[120px] transition-colors duration-300 ${
-      isLightMode ? 'bg-white' : 'bg-black'
-    }`}>
+    <section className="w-full py-16 sm:py-20 lg:py-[120px]">
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
         {/* Header */}
         <div className="mb-8 lg:mb-10">

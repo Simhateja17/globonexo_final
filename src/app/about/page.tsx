@@ -3,6 +3,7 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import FAQSection from "@/components/FAQSection";
+import LiquidBackground from "@/components/LiquidBackground";
 import { useTheme } from "@/context/ThemeContext";
 import Link from "next/link";
 import Image from "next/image";
@@ -12,19 +13,14 @@ const AboutPage = () => {
   const isLightMode = theme === "light";
 
   return (
-    <main className={`min-h-screen transition-colors duration-300 ${
-      isLightMode ? 'bg-white' : 'bg-black'
-    }`}>
+    <main className="min-h-screen relative overflow-hidden">
+      <LiquidBackground />
+      <div className="relative z-10">
       <Navbar />
       
       {/* Page Header Section */}
       <section 
         className="w-full pt-6 sm:pt-7 lg:pt-[30px] pb-10 sm:pb-12 lg:pb-[60px]"
-        style={{
-          background: isLightMode 
-            ? 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%)'
-            : 'linear-gradient(180deg, #000000 0%, #141414 100%)',
-        }}
       >
         <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
           <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10">
@@ -66,9 +62,7 @@ const AboutPage = () => {
       </section>
 
       {/* About Us Content Section */}
-      <section className={`w-full py-16 sm:py-20 lg:py-[120px] transition-colors duration-300 ${
-        isLightMode ? 'bg-white' : 'bg-black'
-      }`}>
+      <section className="w-full py-16 sm:py-20 lg:py-[120px]">
         <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-10">
             {/* Left Content */}
@@ -95,7 +89,7 @@ const AboutPage = () => {
               {/* Join Now Button */}
               <Link
                 href="#"
-                className="inline-flex items-center justify-center min-w-[140px] sm:min-w-[160px] lg:min-w-[180px] h-[38px] px-6 py-2 bg-[#95DE64] hover:bg-[#7bc653] text-black text-sm font-medium leading-[22px] rounded-lg transition-colors duration-200 w-fit"
+                className="inline-flex items-center justify-center min-w-[140px] sm:min-w-[160px] lg:min-w-[180px] h-[38px] px-6 py-2 glass-button text-black text-sm font-medium leading-[22px] rounded-xl transition-all duration-200 w-fit"
               >
                 Join now
               </Link>
@@ -118,9 +112,7 @@ const AboutPage = () => {
       </section>
 
       {/* Our Story Section */}
-      <section className={`w-full py-16 sm:py-20 lg:py-[120px] transition-colors duration-300 ${
-        isLightMode ? 'bg-white' : 'bg-black'
-      }`}>
+      <section className="w-full py-16 sm:py-20 lg:py-[120px]">
         <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
           <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10">
             {/* Superheading */}
@@ -164,9 +156,7 @@ const AboutPage = () => {
       </section>
 
       {/* Leadership Team Section */}
-      <section className={`w-full py-16 sm:py-20 lg:py-[120px] transition-colors duration-300 ${
-        isLightMode ? 'bg-[#F5F5F5]' : 'bg-[#141414]'
-      }`}>
+      <section className="w-full py-16 sm:py-20 lg:py-[120px]">
         <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
           <div className="flex flex-col gap-8 lg:gap-10">
             {/* Header */}
@@ -194,10 +184,8 @@ const AboutPage = () => {
             {/* Team Cards Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
               {/* Card 1 - Bodih Dgmas */}
-              <div className={`rounded-xl border p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 ${
-                isLightMode 
-                  ? 'bg-white border-[#E8E8E8]' 
-                  : 'bg-[#1F1F1F] border-[#141414]'
+              <div className={`rounded-2xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 glass-shimmer ${
+                isLightMode ? 'glass-card-light' : 'glass-card'
               }`}>
                 {/* Photo */}
                 <div className="relative w-full aspect-square max-w-[224px] mx-auto">
@@ -205,7 +193,7 @@ const AboutPage = () => {
                     src="/team_member_1.png"
                     alt="Bodih Dgmas"
                     fill
-                    className="object-cover rounded-lg"
+                    className="object-cover rounded-xl"
                   />
                 </div>
                 
@@ -239,10 +227,8 @@ const AboutPage = () => {
               </div>
 
               {/* Card 2 - Ahmad Errami */}
-              <div className={`rounded-xl border p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 ${
-                isLightMode 
-                  ? 'bg-white border-[#E8E8E8]' 
-                  : 'bg-[#1F1F1F] border-[#141414]'
+              <div className={`rounded-2xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 glass-shimmer ${
+                isLightMode ? 'glass-card-light' : 'glass-card'
               }`}>
                 {/* Photo */}
                 <div className="relative w-full aspect-square max-w-[224px] mx-auto">
@@ -250,7 +236,7 @@ const AboutPage = () => {
                     src="/team_member_2.png"
                     alt="Ahmad Errami"
                     fill
-                    className="object-cover rounded-lg"
+                    className="object-cover rounded-xl"
                   />
                 </div>
                 
@@ -284,10 +270,8 @@ const AboutPage = () => {
               </div>
 
               {/* Card 3 - John Smith */}
-              <div className={`rounded-xl border p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 ${
-                isLightMode 
-                  ? 'bg-white border-[#E8E8E8]' 
-                  : 'bg-[#1F1F1F] border-[#141414]'
+              <div className={`rounded-2xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 glass-shimmer ${
+                isLightMode ? 'glass-card-light' : 'glass-card'
               }`}>
                 {/* Photo */}
                 <div className="relative w-full aspect-square max-w-[224px] mx-auto">
@@ -295,7 +279,7 @@ const AboutPage = () => {
                     src="/team_member_3.png"
                     alt="John Smith"
                     fill
-                    className="object-cover rounded-lg"
+                    className="object-cover rounded-xl"
                   />
                 </div>
                 
@@ -329,10 +313,8 @@ const AboutPage = () => {
               </div>
 
               {/* Card 4 - Satoshi Nakamoto */}
-              <div className={`rounded-xl border p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 ${
-                isLightMode 
-                  ? 'bg-white border-[#E8E8E8]' 
-                  : 'bg-[#1F1F1F] border-[#141414]'
+              <div className={`rounded-2xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 glass-shimmer ${
+                isLightMode ? 'glass-card-light' : 'glass-card'
               }`}>
                 {/* Photo */}
                 <div className="relative w-full aspect-square max-w-[224px] mx-auto">
@@ -340,7 +322,7 @@ const AboutPage = () => {
                     src="/team_member_4.png"
                     alt="Satoshi Nakamoto"
                     fill
-                    className="object-cover rounded-lg"
+                    className="object-cover rounded-xl"
                   />
                 </div>
                 
@@ -379,6 +361,7 @@ const AboutPage = () => {
 
       <FAQSection />
       <Footer />
+      </div>
     </main>
   );
 };

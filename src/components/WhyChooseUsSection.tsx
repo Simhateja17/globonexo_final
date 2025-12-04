@@ -12,8 +12,8 @@ interface WhyChooseCardProps {
 
 const WhyChooseCard = ({ icon, title, description, isLightMode = false }: WhyChooseCardProps) => {
   return (
-    <div className={`flex-shrink-0 w-[240px] sm:w-[260px] lg:w-[272px] h-[280px] sm:h-[290px] lg:h-[302px] rounded-xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 border ${
-      isLightMode ? 'bg-[#E5E5E5] border-[#D9D9D9]' : 'bg-[#1F1F1F] border-[#141414]'
+    <div className={`flex-shrink-0 w-[240px] sm:w-[260px] lg:w-[272px] h-[280px] sm:h-[290px] lg:h-[302px] rounded-2xl lg:rounded-3xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 glass-shimmer ${
+      isLightMode ? 'glass-card-light' : 'glass-card'
     }`}>
       {/* Icon */}
       <div className="text-4xl lg:text-5xl">
@@ -103,9 +103,7 @@ const WhyChooseUsSection = () => {
   }, [isInteracting]);
 
   return (
-    <section className={`w-full py-16 sm:py-20 lg:py-[120px] transition-colors duration-300 ${
-      isLightMode ? 'bg-[#F5F5F5]' : 'bg-[#141414]'
-    }`}>
+    <section className="w-full py-16 sm:py-20 lg:py-[120px]">
       {/* Header Content */}
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px] mb-8 lg:mb-10">
         {/* Superheading */}
@@ -132,10 +130,10 @@ const WhyChooseUsSection = () => {
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
         <div className="relative w-full lg:w-[1160px]">
           {/* Left Fade Gradient */}
-          <div className={`absolute left-0 top-0 bottom-0 w-[40px] sm:w-[60px] lg:w-[80px] bg-gradient-to-r ${isLightMode ? 'from-[#F5F5F5]' : 'from-[#141414]'} to-transparent z-10 pointer-events-none`} />
+          <div className="absolute left-0 top-0 bottom-0 w-[40px] sm:w-[60px] lg:w-[80px] bg-gradient-to-r from-transparent to-transparent z-10 pointer-events-none" />
           
           {/* Right Fade Gradient */}
-          <div className={`absolute right-0 top-0 bottom-0 w-[40px] sm:w-[60px] lg:w-[80px] bg-gradient-to-l ${isLightMode ? 'from-[#F5F5F5]' : 'from-[#141414]'} to-transparent z-10 pointer-events-none`} />
+          <div className="absolute right-0 top-0 bottom-0 w-[40px] sm:w-[60px] lg:w-[80px] bg-gradient-to-l from-transparent to-transparent z-10 pointer-events-none" />
 
           {/* Scrolling Container */}
           <div 

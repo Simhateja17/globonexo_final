@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import LiquidBackground from "@/components/LiquidBackground";
 import { useTheme } from "@/context/ThemeContext";
 import Link from "next/link";
 import Image from "next/image";
@@ -182,9 +183,9 @@ const JoinPage = () => {
   // Success Screen
   if (isSubmitted) {
     return (
-      <main className={`min-h-screen transition-colors duration-300 ${
-        isLightMode ? 'bg-white' : 'bg-black'
-      }`}>
+      <main className="min-h-screen relative overflow-hidden">
+        <LiquidBackground />
+        <div className="relative z-10">
         <Navbar />
         
         {/* Success Section */}
@@ -211,24 +212,20 @@ const JoinPage = () => {
         </section>
         
         <Footer />
+        </div>
       </main>
     );
   }
 
   return (
-    <main className={`min-h-screen transition-colors duration-300 ${
-      isLightMode ? 'bg-white' : 'bg-black'
-    }`}>
+    <main className="min-h-screen relative overflow-hidden">
+      <LiquidBackground />
+      <div className="relative z-10">
       <Navbar />
       
       {/* Page Header Section */}
       <section 
         className="w-full pt-6 sm:pt-7 lg:pt-[30px] pb-10 sm:pb-12 lg:pb-[60px]"
-        style={{
-          background: isLightMode 
-            ? 'linear-gradient(180deg, #FFFFFF 0%, #F5F5F5 100%)'
-            : 'linear-gradient(180deg, #000000 0%, #141414 100%)',
-        }}
       >
         <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
           <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10">
@@ -270,11 +267,9 @@ const JoinPage = () => {
       </section>
 
       {/* Join Form Section */}
-      <section className={`w-full py-16 sm:py-20 lg:py-[120px] transition-colors duration-300 ${
-        isLightMode ? 'bg-white' : 'bg-black'
-      }`}>
+      <section className="w-full py-16 sm:py-20 lg:py-[120px]">
         <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px]">
-          <form onSubmit={handleSubmit} className="flex flex-col gap-8 lg:gap-10 max-w-[450px] mx-auto">
+          <form onSubmit={handleSubmit} className={`flex flex-col gap-8 lg:gap-10 max-w-[450px] mx-auto p-8 rounded-2xl ${isLightMode ? 'glass-card-light' : 'glass-card'}`}>
             
             {/* Personal Information Section */}
             <div className="flex flex-col gap-6">
@@ -582,7 +577,7 @@ const JoinPage = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full h-12 px-6 py-2 rounded-lg bg-[#95DE64] hover:bg-[#7bc653] text-black text-sm font-medium leading-[22px] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full h-12 px-6 py-2 rounded-xl glass-button text-black text-sm font-medium leading-[22px] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? "Submitting..." : "Send Application"}
             </button>
@@ -591,6 +586,7 @@ const JoinPage = () => {
       </section>
 
       <Footer />
+      </div>
     </main>
   );
 };
