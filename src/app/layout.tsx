@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
+import PasswordModal from "@/components/PasswordModal";
 
 // Initialize fonts with Next.js font optimization
 const roboto = Roboto({
@@ -34,7 +35,9 @@ export default function RootLayout({
     <html lang="en" className={`${roboto.variable} ${robotoMono.variable}`}>
       <body className={`${roboto.className} antialiased`}>
         <ThemeProvider>
-          {children}
+          <PasswordModal>
+            {children}
+          </PasswordModal>
         </ThemeProvider>
       </body>
     </html>
