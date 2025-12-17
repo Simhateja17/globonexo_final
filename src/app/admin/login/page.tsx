@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 
 export default function AdminLoginPage() {
@@ -50,9 +51,16 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">
-            <span className="text-[#95DE64]">Globonexo</span> Admin
-          </h1>
+          <div className="flex justify-center mb-4">
+            <Image
+              src="/globonexo_logo_dark_mode.png"
+              alt="Globonexo Admin"
+              width={200}
+              height={50}
+              className="h-12 w-auto object-contain"
+              priority
+            />
+          </div>
           <p className="text-[#8C8C8C] text-sm">
             Sign in to manage your website content
           </p>

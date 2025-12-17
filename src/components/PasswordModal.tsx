@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 const CORRECT_PASSWORD = "MovingForward2026";
 const STORAGE_KEY = "globonexo_authenticated";
@@ -63,9 +64,16 @@ export default function PasswordModal({ children }: { children: React.ReactNode 
       >
         {/* Logo or Title */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
-            Globo<span className="text-[#95DE64]">nexo</span>
-          </h1>
+          <div className="flex justify-center mb-4">
+            <Image
+              src="/globonexo_logo_dark_mode.png"
+              alt="Globonexo"
+              width={200}
+              height={50}
+              className="h-10 w-auto object-contain"
+              priority
+            />
+          </div>
           <p className="text-[#BFBFBF] text-sm md:text-base">
             Enter password to access the website
           </p>

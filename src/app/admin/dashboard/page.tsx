@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useAuth } from "@/context/AuthContext";
 import { useContent } from "@/context/ContentContext";
 import {
@@ -196,9 +197,14 @@ export default function AdminDashboardPage() {
       <header className="bg-[#141414] border-b border-[#262626] px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <h1 className="text-xl font-bold text-white">
-              <span className="text-[#95DE64]">Globonexo</span> CMS
-            </h1>
+            <Image
+              src="/globonexo_logo_dark_mode.png"
+              alt="Globonexo CMS"
+              width={160}
+              height={40}
+              className="h-8 w-auto object-contain"
+              priority
+            />
             <span className="text-xs text-[#595959] bg-[#1f1f1f] px-2 py-1 rounded">
               {user.email}
             </span>
