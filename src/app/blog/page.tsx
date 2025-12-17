@@ -5,60 +5,27 @@ import Footer from "@/components/Footer";
 import LiquidBackground from "@/components/LiquidBackground";
 import FAQSection from "@/components/FAQSection";
 import { useTheme } from "@/context/ThemeContext";
+import { useContent } from "@/context/ContentContext";
 import Link from "next/link";
 import Image from "next/image";
 
-// Blog data
-const blogs = [
-  {
-    id: 1,
-    title: "What is digital marketing and why is important?",
-    category: "Category",
-    date: "January 20, 2025",
-    readTime: "5 minutes",
-    excerpt: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo earum id assumenda ad neque recusandae, quasi delenti voluptatum eos vel quas molestias?Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
-    extendedExcerpt: "Explicabo earum id assumenda ad neque recusandae, quasi delenti voluptatum eos vel quas molestias? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo earum id assumenda ad neque recusandae, quasi delenti voluptatum eos vel quas molestias?",
-    image: "/blog_1.png",
-    slug: "what-is-digital-marketing",
-  },
-  {
-    id: 2,
-    title: "What is digital marketing and why is important?",
-    category: "Category",
-    date: "January 20, 2025",
-    readTime: "5 minutes",
-    excerpt: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo earum id assumenda ad neque recusandae, quasi delenti voluptatum eos vel quas molestias?",
-    image: "/blog_2.png",
-    slug: "digital-marketing-importance",
-  },
-  {
-    id: 3,
-    title: "What is digital marketing and why is important?",
-    category: "Category",
-    date: "January 20, 2025",
-    readTime: "5 minutes",
-    excerpt: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo earum id assumenda ad neque recusandae, quasi delenti voluptatum eos vel quas molestias?",
-    image: "/blog_3.png",
-    slug: "marketing-strategies",
-  },
-  {
-    id: 4,
-    title: "What is digital marketing and why is important?",
-    category: "Category",
-    date: "January 20, 2025",
-    readTime: "5 minutes",
-    excerpt: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo earum id assumenda ad neque recusandae, quasi delenti voluptatum eos vel quas molestias?",
-    image: "/blog_4.png",
-    slug: "digital-trends",
-  },
-];
-
 const BlogPage = () => {
   const { theme } = useTheme();
+  const { allContent, loading } = useContent();
   const isLightMode = theme === "light";
 
-  const featuredBlog = blogs[0];
-  const otherBlogs = blogs.slice(1, 4);
+  const pageContent = allContent.blogPage;
+  const sortedPosts = [...pageContent.posts].sort((a, b) => a.order - b.order);
+  const featuredBlog = sortedPosts[0];
+  const otherBlogs = sortedPosts.slice(1);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen relative overflow-hidden flex items-center justify-center">
+        <div className={isLightMode ? 'text-[#141414]' : 'text-white'}>Loading...</div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen relative overflow-hidden">
@@ -135,7 +102,7 @@ const BlogPage = () => {
                 lineHeight: 'clamp(34px, 3.19vw, 46px)',
               }}
             >
-              Blog
+              {pageContent.pageTitle}
             </h1>
 
             {/* Description */}
@@ -149,7 +116,7 @@ const BlogPage = () => {
                 lineHeight: 'clamp(18px, 1.53vw, 22px)',
               }}
             >
-              Although, final stages of the internal network gives a complete experience of The Parameter of Speculative Environment
+              {pageContent.pageDescription}
             </p>
           </div>
         </div>

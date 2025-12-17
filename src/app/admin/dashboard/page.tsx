@@ -17,20 +17,38 @@ import {
   WhyChooseCard,
   Testimonial,
   FAQItem,
+  AboutPageContent,
+  BlogPageContent,
+  ServicesPageContent,
+  GlobalPresencePageContent,
+  JoinPageContent,
+  TeamMember,
+  BlogPost,
+  ServiceBlock,
+  GlobalLocation,
 } from "@/types/content";
 
-type TabType = "hero" | "services" | "about" | "whyChooseUs" | "testimonials" | "faq" | "contact";
+type TabType = 
+  | "hero" | "services" | "about" | "whyChooseUs" | "testimonials" | "faq" | "contact"
+  | "aboutPage" | "blogPage" | "servicesPage" | "globalPresencePage" | "joinPage";
 
 export default function AdminDashboardPage() {
   const { user, loading: authLoading, signOut } = useAuth();
-  const { content, loading: contentLoading, updateHero, updateServices, updateAbout, updateWhyChooseUs, updateTestimonials, updateFAQ, updateContact, initializeContent } = useContent();
+  const { 
+    content, 
+    allContent,
+    loading: contentLoading, 
+    updateHero, updateServices, updateAbout, updateWhyChooseUs, updateTestimonials, updateFAQ, updateContact,
+    updateAboutPage, updateBlogPage, updateServicesPage, updateGlobalPresencePage, updateJoinPage,
+    initializeContent 
+  } = useContent();
   const router = useRouter();
   
   const [activeTab, setActiveTab] = useState<TabType>("hero");
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
-  // Local state for editing
+  // Local state for editing - Homepage sections
   const [heroData, setHeroData] = useState<HeroContent>(content.hero);
   const [servicesData, setServicesData] = useState<ServicesContent>(content.services);
   const [aboutData, setAboutData] = useState<AboutContent>(content.about);
@@ -38,6 +56,13 @@ export default function AdminDashboardPage() {
   const [testimonialsData, setTestimonialsData] = useState<TestimonialsContent>(content.testimonials);
   const [faqData, setFaqData] = useState<FAQContent>(content.faq);
   const [contactData, setContactData] = useState<ContactContent>(content.contact);
+
+  // Local state for editing - Other pages
+  const [aboutPageData, setAboutPageData] = useState<AboutPageContent>(allContent.aboutPage);
+  const [blogPageData, setBlogPageData] = useState<BlogPageContent>(allContent.blogPage);
+  const [servicesPageData, setServicesPageData] = useState<ServicesPageContent>(allContent.servicesPage);
+  const [globalPresencePageData, setGlobalPresencePageData] = useState<GlobalPresencePageContent>(allContent.globalPresencePage);
+  const [joinPageData, setJoinPageData] = useState<JoinPageContent>(allContent.joinPage);
 
   // Update local state when content changes
   useEffect(() => {
@@ -49,6 +74,14 @@ export default function AdminDashboardPage() {
     setFaqData(content.faq);
     setContactData(content.contact);
   }, [content]);
+
+  useEffect(() => {
+    setAboutPageData(allContent.aboutPage);
+    setBlogPageData(allContent.blogPage);
+    setServicesPageData(allContent.servicesPage);
+    setGlobalPresencePageData(allContent.globalPresencePage);
+    setJoinPageData(allContent.joinPage);
+  }, [allContent]);
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -104,6 +137,21 @@ export default function AdminDashboardPage() {
         case "contact":
           await updateContact(contactData);
           break;
+        case "aboutPage":
+          await updateAboutPage(aboutPageData);
+          break;
+        case "blogPage":
+          await updateBlogPage(blogPageData);
+          break;
+        case "servicesPage":
+          await updateServicesPage(servicesPageData);
+          break;
+        case "globalPresencePage":
+          await updateGlobalPresencePage(globalPresencePageData);
+          break;
+        case "joinPage":
+          await updateJoinPage(joinPageData);
+          break;
       }
       showMessage("success", "Changes saved successfully!");
     } catch {
@@ -114,24 +162,32 @@ export default function AdminDashboardPage() {
   };
 
   const handleInitialize = async () => {
-    if (confirm("This will initialize the database with default content. Continue?")) {
+    if (confirm("This will initialize the database with default content for ALL pages. Continue?")) {
       try {
         await initializeContent();
-        showMessage("success", "Content initialized successfully!");
+        showMessage("success", "All content initialized successfully!");
       } catch {
         showMessage("error", "Failed to initialize content.");
       }
     }
   };
 
-  const tabs: { id: TabType; label: string }[] = [
-    { id: "hero", label: "Hero Section" },
+  const homepageTabs: { id: TabType; label: string }[] = [
+    { id: "hero", label: "Hero" },
     { id: "services", label: "Services" },
     { id: "about", label: "About Us" },
     { id: "whyChooseUs", label: "Why Choose Us" },
     { id: "testimonials", label: "Testimonials" },
     { id: "faq", label: "FAQ" },
     { id: "contact", label: "Contact" },
+  ];
+
+  const pageTabs: { id: TabType; label: string }[] = [
+    { id: "aboutPage", label: "About Page" },
+    { id: "blogPage", label: "Blog" },
+    { id: "servicesPage", label: "Services Page" },
+    { id: "globalPresencePage", label: "Global Presence" },
+    { id: "joinPage", label: "Join Page" },
   ];
 
   return (
@@ -152,7 +208,7 @@ export default function AdminDashboardPage() {
               onClick={handleInitialize}
               className="text-sm text-[#95DE64] hover:underline"
             >
-              Initialize DB
+              Initialize All Pages
             </button>
             <a
               href="/"
@@ -185,25 +241,49 @@ export default function AdminDashboardPage() {
           </div>
         )}
 
-        {/* Tabs */}
-        <div className="flex flex-wrap gap-2 mb-6 border-b border-[#262626] pb-4">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
-                activeTab === tab.id
-                  ? "bg-[#95DE64] text-black"
-                  : "bg-[#1f1f1f] text-[#BFBFBF] hover:bg-[#262626]"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+        {/* Homepage Tabs */}
+        <div className="mb-4">
+          <h3 className="text-xs font-medium text-[#595959] uppercase tracking-wider mb-2">Homepage Sections</h3>
+          <div className="flex flex-wrap gap-2">
+            {homepageTabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  activeTab === tab.id
+                    ? "bg-[#95DE64] text-black"
+                    : "bg-[#1f1f1f] text-[#BFBFBF] hover:bg-[#262626]"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Other Pages Tabs */}
+        <div className="mb-6 border-b border-[#262626] pb-4">
+          <h3 className="text-xs font-medium text-[#595959] uppercase tracking-wider mb-2">Other Pages</h3>
+          <div className="flex flex-wrap gap-2">
+            {pageTabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  activeTab === tab.id
+                    ? "bg-[#95DE64] text-black"
+                    : "bg-[#1f1f1f] text-[#BFBFBF] hover:bg-[#262626]"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Content Editor */}
         <div className="bg-[#141414] border border-[#262626] rounded-xl p-6">
+          {/* Homepage Editors */}
           {activeTab === "hero" && (
             <HeroEditor data={heroData} onChange={setHeroData} />
           )}
@@ -224,6 +304,23 @@ export default function AdminDashboardPage() {
           )}
           {activeTab === "contact" && (
             <ContactEditor data={contactData} onChange={setContactData} />
+          )}
+
+          {/* Other Page Editors */}
+          {activeTab === "aboutPage" && (
+            <AboutPageEditor data={aboutPageData} onChange={setAboutPageData} />
+          )}
+          {activeTab === "blogPage" && (
+            <BlogPageEditor data={blogPageData} onChange={setBlogPageData} />
+          )}
+          {activeTab === "servicesPage" && (
+            <ServicesPageEditor data={servicesPageData} onChange={setServicesPageData} />
+          )}
+          {activeTab === "globalPresencePage" && (
+            <GlobalPresencePageEditor data={globalPresencePageData} onChange={setGlobalPresencePageData} />
+          )}
+          {activeTab === "joinPage" && (
+            <JoinPageEditor data={joinPageData} onChange={setJoinPageData} />
           )}
 
           {/* Save Button */}
@@ -779,6 +876,480 @@ function ContactEditor({ data, onChange }: { data: ContactContent; onChange: (da
             </div>
           </div>
         ))}
+      </div>
+    </div>
+  );
+}
+
+// ============================================
+// OTHER PAGE EDITORS
+// ============================================
+
+// About Page Editor
+function AboutPageEditor({ data, onChange }: { data: AboutPageContent; onChange: (data: AboutPageContent) => void }) {
+  const addTeamMember = () => {
+    const newMember: TeamMember = {
+      id: Date.now().toString(),
+      name: "New Member",
+      role: "Role",
+      photo: "/team_member_1.png",
+      linkedinUrl: "#",
+      facebookUrl: "#",
+      twitterUrl: "#",
+      instagramUrl: "#",
+      order: data.teamMembers.length + 1
+    };
+    onChange({ ...data, teamMembers: [...data.teamMembers, newMember] });
+  };
+
+  const updateTeamMember = (index: number, member: TeamMember) => {
+    const newMembers = [...data.teamMembers];
+    newMembers[index] = member;
+    onChange({ ...data, teamMembers: newMembers });
+  };
+
+  const removeTeamMember = (index: number) => {
+    onChange({ ...data, teamMembers: data.teamMembers.filter((_, i) => i !== index) });
+  };
+
+  return (
+    <div>
+      <h2 className="text-xl font-semibold text-white mb-6">About Page</h2>
+      
+      <div className="mb-6 p-4 bg-[#1f1f1f] rounded-lg border border-[#333]">
+        <h3 className="text-sm font-medium text-[#95DE64] mb-4">Page Meta</h3>
+        <Input label="Page Title" value={data.pageTitle} onChange={(v) => onChange({ ...data, pageTitle: v })} />
+        <Input label="Page Description" value={data.pageDescription} onChange={(v) => onChange({ ...data, pageDescription: v })} multiline />
+      </div>
+
+      <div className="mb-6 p-4 bg-[#1f1f1f] rounded-lg border border-[#333]">
+        <h3 className="text-sm font-medium text-[#95DE64] mb-4">About Section</h3>
+        <Input label="Superheading" value={data.aboutSuperheading} onChange={(v) => onChange({ ...data, aboutSuperheading: v })} />
+        <Input label="Heading" value={data.aboutHeading} onChange={(v) => onChange({ ...data, aboutHeading: v })} />
+        <Input label="Description" value={data.aboutDescription} onChange={(v) => onChange({ ...data, aboutDescription: v })} multiline />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Input label="Button Text" value={data.aboutButtonText} onChange={(v) => onChange({ ...data, aboutButtonText: v })} />
+          <Input label="Button Link" value={data.aboutButtonLink} onChange={(v) => onChange({ ...data, aboutButtonLink: v })} />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Input label="Image (Dark Mode)" value={data.aboutImage} onChange={(v) => onChange({ ...data, aboutImage: v })} />
+          <Input label="Image (Light Mode)" value={data.aboutImageLight} onChange={(v) => onChange({ ...data, aboutImageLight: v })} />
+        </div>
+      </div>
+
+      <div className="mb-6 p-4 bg-[#1f1f1f] rounded-lg border border-[#333]">
+        <h3 className="text-sm font-medium text-[#95DE64] mb-4">Story Section</h3>
+        <Input label="Superheading" value={data.storySuperheading} onChange={(v) => onChange({ ...data, storySuperheading: v })} />
+        <Input label="Heading" value={data.storyHeading} onChange={(v) => onChange({ ...data, storyHeading: v })} />
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-[#BFBFBF] mb-2">Story Paragraphs</label>
+          {data.storyParagraphs.map((p, i) => (
+            <div key={i} className="mb-2 flex gap-2">
+              <textarea
+                value={p}
+                onChange={(e) => {
+                  const newParagraphs = [...data.storyParagraphs];
+                  newParagraphs[i] = e.target.value;
+                  onChange({ ...data, storyParagraphs: newParagraphs });
+                }}
+                rows={3}
+                className="flex-1 px-4 py-3 bg-[#0a0a0a] border border-[#333] rounded-lg text-white focus:outline-none focus:border-[#95DE64]"
+              />
+              <button
+                onClick={() => onChange({ ...data, storyParagraphs: data.storyParagraphs.filter((_, idx) => idx !== i) })}
+                className="text-red-400 hover:text-red-300 px-2"
+              >
+                ×
+              </button>
+            </div>
+          ))}
+          <button
+            onClick={() => onChange({ ...data, storyParagraphs: [...data.storyParagraphs, ""] })}
+            className="text-sm text-[#95DE64] hover:underline"
+          >
+            + Add Paragraph
+          </button>
+        </div>
+      </div>
+
+      <div className="p-4 bg-[#1f1f1f] rounded-lg border border-[#333]">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-sm font-medium text-[#95DE64]">Team Section</h3>
+          <button onClick={addTeamMember} className="text-sm bg-[#95DE64] text-black px-4 py-2 rounded-lg hover:bg-[#7bc653]">
+            + Add Member
+          </button>
+        </div>
+        <Input label="Superheading" value={data.teamSuperheading} onChange={(v) => onChange({ ...data, teamSuperheading: v })} />
+        <Input label="Heading" value={data.teamHeading} onChange={(v) => onChange({ ...data, teamHeading: v })} />
+        <Input label="Description" value={data.teamDescription} onChange={(v) => onChange({ ...data, teamDescription: v })} multiline />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          {data.teamMembers.map((member, index) => (
+            <div key={member.id} className="bg-[#0a0a0a] border border-[#333] rounded-lg p-4">
+              <div className="flex justify-between items-start mb-2">
+                <span className="text-[#95DE64] text-sm">Member {index + 1}</span>
+                <button onClick={() => removeTeamMember(index)} className="text-red-400 hover:text-red-300 text-sm">
+                  Remove
+                </button>
+              </div>
+              <Input label="Name" value={member.name} onChange={(v) => updateTeamMember(index, { ...member, name: v })} />
+              <Input label="Role" value={member.role} onChange={(v) => updateTeamMember(index, { ...member, role: v })} />
+              <Input label="Photo URL" value={member.photo} onChange={(v) => updateTeamMember(index, { ...member, photo: v })} />
+              <Input label="LinkedIn" value={member.linkedinUrl} onChange={(v) => updateTeamMember(index, { ...member, linkedinUrl: v })} />
+              <Input label="Twitter" value={member.twitterUrl} onChange={(v) => updateTeamMember(index, { ...member, twitterUrl: v })} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Blog Page Editor
+function BlogPageEditor({ data, onChange }: { data: BlogPageContent; onChange: (data: BlogPageContent) => void }) {
+  const addPost = () => {
+    const newPost: BlogPost = {
+      id: Date.now().toString(),
+      title: "New Blog Post",
+      category: "Technology",
+      date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+      readTime: "5 minutes",
+      excerpt: "Blog post excerpt...",
+      image: "/blog_1.png",
+      slug: "new-blog-post",
+      order: data.posts.length + 1
+    };
+    onChange({ ...data, posts: [...data.posts, newPost] });
+  };
+
+  const updatePost = (index: number, post: BlogPost) => {
+    const newPosts = [...data.posts];
+    newPosts[index] = post;
+    onChange({ ...data, posts: newPosts });
+  };
+
+  const removePost = (index: number) => {
+    onChange({ ...data, posts: data.posts.filter((_, i) => i !== index) });
+  };
+
+  return (
+    <div>
+      <h2 className="text-xl font-semibold text-white mb-6">Blog Page</h2>
+      
+      <div className="mb-6 p-4 bg-[#1f1f1f] rounded-lg border border-[#333]">
+        <h3 className="text-sm font-medium text-[#95DE64] mb-4">Page Meta</h3>
+        <Input label="Page Title" value={data.pageTitle} onChange={(v) => onChange({ ...data, pageTitle: v })} />
+        <Input label="Page Description" value={data.pageDescription} onChange={(v) => onChange({ ...data, pageDescription: v })} multiline />
+      </div>
+
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-sm font-medium text-[#95DE64]">Blog Posts</h3>
+        <button onClick={addPost} className="text-sm bg-[#95DE64] text-black px-4 py-2 rounded-lg hover:bg-[#7bc653]">
+          + Add Post
+        </button>
+      </div>
+
+      <div className="space-y-4">
+        {data.posts.map((post, index) => (
+          <div key={post.id} className="bg-[#1f1f1f] border border-[#333] rounded-lg p-4">
+            <div className="flex justify-between items-start mb-4">
+              <span className="text-[#95DE64] text-sm">Post {index + 1} {index === 0 && "(Featured)"}</span>
+              <button onClick={() => removePost(index)} className="text-red-400 hover:text-red-300 text-sm">
+                Remove
+              </button>
+            </div>
+            <Input label="Title" value={post.title} onChange={(v) => updatePost(index, { ...post, title: v })} />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <Input label="Category" value={post.category} onChange={(v) => updatePost(index, { ...post, category: v })} />
+              <Input label="Date" value={post.date} onChange={(v) => updatePost(index, { ...post, date: v })} />
+              <Input label="Read Time" value={post.readTime} onChange={(v) => updatePost(index, { ...post, readTime: v })} />
+            </div>
+            <Input label="Excerpt" value={post.excerpt} onChange={(v) => updatePost(index, { ...post, excerpt: v })} multiline />
+            {index === 0 && (
+              <Input label="Extended Excerpt (Featured Only)" value={post.extendedExcerpt || ""} onChange={(v) => updatePost(index, { ...post, extendedExcerpt: v })} multiline />
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Input label="Image URL" value={post.image} onChange={(v) => updatePost(index, { ...post, image: v })} />
+              <Input label="Slug" value={post.slug} onChange={(v) => updatePost(index, { ...post, slug: v })} />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Services Page Editor
+function ServicesPageEditor({ data, onChange }: { data: ServicesPageContent; onChange: (data: ServicesPageContent) => void }) {
+  const addBlock = () => {
+    const newBlock: ServiceBlock = {
+      id: Date.now().toString(),
+      superheading: "new section",
+      title: "New Service Block",
+      paragraphs: ["Description paragraph..."],
+      ctaText: "LEARN MORE",
+      ctaLink: "/contact",
+      imageSrc: "",
+      imageAlt: "Service Image",
+      isReversed: data.blocks.length % 2 === 1,
+      order: data.blocks.length + 1
+    };
+    onChange({ ...data, blocks: [...data.blocks, newBlock] });
+  };
+
+  const updateBlock = (index: number, block: ServiceBlock) => {
+    const newBlocks = [...data.blocks];
+    newBlocks[index] = block;
+    onChange({ ...data, blocks: newBlocks });
+  };
+
+  const removeBlock = (index: number) => {
+    onChange({ ...data, blocks: data.blocks.filter((_, i) => i !== index) });
+  };
+
+  return (
+    <div>
+      <h2 className="text-xl font-semibold text-white mb-6">Services Page</h2>
+      
+      <div className="mb-6 p-4 bg-[#1f1f1f] rounded-lg border border-[#333]">
+        <h3 className="text-sm font-medium text-[#95DE64] mb-4">Page Meta</h3>
+        <Input label="Page Title" value={data.pageTitle} onChange={(v) => onChange({ ...data, pageTitle: v })} />
+        <Input label="Breadcrumb Text" value={data.pageBreadcrumb} onChange={(v) => onChange({ ...data, pageBreadcrumb: v })} />
+        <Input label="Page Description" value={data.pageDescription} onChange={(v) => onChange({ ...data, pageDescription: v })} multiline />
+      </div>
+
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-sm font-medium text-[#95DE64]">Content Blocks</h3>
+        <button onClick={addBlock} className="text-sm bg-[#95DE64] text-black px-4 py-2 rounded-lg hover:bg-[#7bc653]">
+          + Add Block
+        </button>
+      </div>
+
+      <div className="space-y-4">
+        {data.blocks.map((block, index) => (
+          <div key={block.id} className="bg-[#1f1f1f] border border-[#333] rounded-lg p-4">
+            <div className="flex justify-between items-start mb-4">
+              <span className="text-[#95DE64] text-sm">Block {index + 1} {block.isReversed ? "(Reversed)" : ""}</span>
+              <button onClick={() => removeBlock(index)} className="text-red-400 hover:text-red-300 text-sm">
+                Remove
+              </button>
+            </div>
+            <Input label="Superheading" value={block.superheading} onChange={(v) => updateBlock(index, { ...block, superheading: v })} />
+            <Input label="Title" value={block.title} onChange={(v) => updateBlock(index, { ...block, title: v })} />
+            
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-[#BFBFBF] mb-2">Paragraphs</label>
+              {block.paragraphs.map((p, i) => (
+                <div key={i} className="mb-2 flex gap-2">
+                  <textarea
+                    value={p}
+                    onChange={(e) => {
+                      const newParagraphs = [...block.paragraphs];
+                      newParagraphs[i] = e.target.value;
+                      updateBlock(index, { ...block, paragraphs: newParagraphs });
+                    }}
+                    rows={2}
+                    className="flex-1 px-4 py-3 bg-[#0a0a0a] border border-[#333] rounded-lg text-white focus:outline-none focus:border-[#95DE64]"
+                  />
+                  <button
+                    onClick={() => updateBlock(index, { ...block, paragraphs: block.paragraphs.filter((_, idx) => idx !== i) })}
+                    className="text-red-400 hover:text-red-300 px-2"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+              <button
+                onClick={() => updateBlock(index, { ...block, paragraphs: [...block.paragraphs, ""] })}
+                className="text-sm text-[#95DE64] hover:underline"
+              >
+                + Add Paragraph
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Input label="CTA Text" value={block.ctaText} onChange={(v) => updateBlock(index, { ...block, ctaText: v })} />
+              <Input label="CTA Link" value={block.ctaLink} onChange={(v) => updateBlock(index, { ...block, ctaLink: v })} />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <Input label="Image URL" value={block.imageSrc} onChange={(v) => updateBlock(index, { ...block, imageSrc: v })} />
+              <Input label="Image Alt" value={block.imageAlt} onChange={(v) => updateBlock(index, { ...block, imageAlt: v })} />
+            </div>
+            <label className="flex items-center gap-2 text-sm text-[#BFBFBF] mt-2">
+              <input
+                type="checkbox"
+                checked={block.isReversed}
+                onChange={(e) => updateBlock(index, { ...block, isReversed: e.target.checked })}
+                className="w-4 h-4"
+              />
+              Reversed Layout (Image on Left)
+            </label>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Global Presence Page Editor
+function GlobalPresencePageEditor({ data, onChange }: { data: GlobalPresencePageContent; onChange: (data: GlobalPresencePageContent) => void }) {
+  const addLocation = () => {
+    const newLocation: GlobalLocation = {
+      id: Date.now().toString(),
+      name: "New Location",
+      designations: [{ type: "Development center", color: "#95DE64" }],
+      x: 50,
+      y: 50
+    };
+    onChange({ ...data, locations: [...data.locations, newLocation] });
+  };
+
+  const updateLocation = (index: number, location: GlobalLocation) => {
+    const newLocations = [...data.locations];
+    newLocations[index] = location;
+    onChange({ ...data, locations: newLocations });
+  };
+
+  const removeLocation = (index: number) => {
+    onChange({ ...data, locations: data.locations.filter((_, i) => i !== index) });
+  };
+
+  return (
+    <div>
+      <h2 className="text-xl font-semibold text-white mb-6">Global Presence Page</h2>
+      
+      <div className="mb-6 p-4 bg-[#1f1f1f] rounded-lg border border-[#333]">
+        <h3 className="text-sm font-medium text-[#95DE64] mb-4">Page Meta</h3>
+        <Input label="Page Title" value={data.pageTitle} onChange={(v) => onChange({ ...data, pageTitle: v })} />
+        <Input label="Page Description" value={data.pageDescription} onChange={(v) => onChange({ ...data, pageDescription: v })} multiline />
+      </div>
+
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="text-sm font-medium text-[#95DE64]">Locations (Map Markers)</h3>
+        <button onClick={addLocation} className="text-sm bg-[#95DE64] text-black px-4 py-2 rounded-lg hover:bg-[#7bc653]">
+          + Add Location
+        </button>
+      </div>
+
+      <div className="text-xs text-[#595959] mb-4">
+        X and Y are percentages (0-100) representing position on the map. X is horizontal (0=left, 100=right), Y is vertical (0=top, 100=bottom).
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {data.locations.map((loc, index) => (
+          <div key={loc.id} className="bg-[#1f1f1f] border border-[#333] rounded-lg p-4">
+            <div className="flex justify-between items-start mb-2">
+              <span className="text-[#95DE64] text-sm">{loc.name}</span>
+              <button onClick={() => removeLocation(index)} className="text-red-400 hover:text-red-300 text-sm">
+                Remove
+              </button>
+            </div>
+            <Input label="Location Name" value={loc.name} onChange={(v) => updateLocation(index, { ...loc, name: v })} />
+            <div className="grid grid-cols-2 gap-4">
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-[#BFBFBF] mb-2">X Position (%)</label>
+                <input
+                  type="number"
+                  value={loc.x}
+                  onChange={(e) => updateLocation(index, { ...loc, x: parseFloat(e.target.value) || 0 })}
+                  step="0.1"
+                  min="0"
+                  max="100"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-[#333] rounded-lg text-white focus:outline-none focus:border-[#95DE64]"
+                />
+              </div>
+              <div className="mb-4">
+                <label className="block text-sm font-medium text-[#BFBFBF] mb-2">Y Position (%)</label>
+                <input
+                  type="number"
+                  value={loc.y}
+                  onChange={(e) => updateLocation(index, { ...loc, y: parseFloat(e.target.value) || 0 })}
+                  step="0.1"
+                  min="0"
+                  max="100"
+                  className="w-full px-4 py-3 bg-[#0a0a0a] border border-[#333] rounded-lg text-white focus:outline-none focus:border-[#95DE64]"
+                />
+              </div>
+            </div>
+            <div className="mb-2">
+              <label className="block text-sm font-medium text-[#BFBFBF] mb-2">Designations</label>
+              {loc.designations.map((d, di) => (
+                <div key={di} className="flex gap-2 mb-2">
+                  <input
+                    type="text"
+                    value={d.type}
+                    onChange={(e) => {
+                      const newDesignations = [...loc.designations];
+                      newDesignations[di] = { ...d, type: e.target.value };
+                      updateLocation(index, { ...loc, designations: newDesignations });
+                    }}
+                    placeholder="Type"
+                    className="flex-1 px-3 py-2 bg-[#0a0a0a] border border-[#333] rounded text-white text-sm focus:outline-none focus:border-[#95DE64]"
+                  />
+                  <input
+                    type="color"
+                    value={d.color}
+                    onChange={(e) => {
+                      const newDesignations = [...loc.designations];
+                      newDesignations[di] = { ...d, color: e.target.value };
+                      updateLocation(index, { ...loc, designations: newDesignations });
+                    }}
+                    className="w-10 h-10 rounded cursor-pointer"
+                  />
+                  <button
+                    onClick={() => {
+                      const newDesignations = loc.designations.filter((_, idx) => idx !== di);
+                      updateLocation(index, { ...loc, designations: newDesignations });
+                    }}
+                    className="text-red-400 hover:text-red-300 px-2"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+              <button
+                onClick={() => {
+                  const newDesignations = [...loc.designations, { type: "New Type", color: "#95DE64" }];
+                  updateLocation(index, { ...loc, designations: newDesignations });
+                }}
+                className="text-xs text-[#95DE64] hover:underline"
+              >
+                + Add Designation
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Join Page Editor
+function JoinPageEditor({ data, onChange }: { data: JoinPageContent; onChange: (data: JoinPageContent) => void }) {
+  return (
+    <div>
+      <h2 className="text-xl font-semibold text-white mb-6">Join Page</h2>
+      
+      <div className="mb-6 p-4 bg-[#1f1f1f] rounded-lg border border-[#333]">
+        <h3 className="text-sm font-medium text-[#95DE64] mb-4">Page Meta</h3>
+        <Input label="Page Title" value={data.pageTitle} onChange={(v) => onChange({ ...data, pageTitle: v })} />
+        <Input label="Page Description" value={data.pageDescription} onChange={(v) => onChange({ ...data, pageDescription: v })} multiline />
+      </div>
+
+      <div className="mb-6 p-4 bg-[#1f1f1f] rounded-lg border border-[#333]">
+        <h3 className="text-sm font-medium text-[#95DE64] mb-4">Form Section</h3>
+        <Input label="Form Title" value={data.formTitle} onChange={(v) => onChange({ ...data, formTitle: v })} />
+        <Input label="Form Description" value={data.formDescription} onChange={(v) => onChange({ ...data, formDescription: v })} multiline />
+      </div>
+
+      <div className="p-4 bg-[#1f1f1f] rounded-lg border border-[#333]">
+        <h3 className="text-sm font-medium text-[#95DE64] mb-4">Success State</h3>
+        <Input label="Success Title" value={data.successTitle} onChange={(v) => onChange({ ...data, successTitle: v })} />
+        <Input label="Success Message" value={data.successMessage} onChange={(v) => onChange({ ...data, successMessage: v })} multiline />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Input label="Success Button Text" value={data.successButtonText} onChange={(v) => onChange({ ...data, successButtonText: v })} />
+          <Input label="Success Button Link" value={data.successButtonLink} onChange={(v) => onChange({ ...data, successButtonLink: v })} />
+        </div>
       </div>
     </div>
   );

@@ -151,6 +151,141 @@ export interface HomepageContent {
 }
 
 // ============================================
+// ABOUT PAGE CONTENT
+// ============================================
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  photo: string;
+  linkedinUrl: string;
+  facebookUrl: string;
+  twitterUrl: string;
+  instagramUrl: string;
+  order: number;
+}
+
+export interface AboutPageContent {
+  // Page Header
+  pageTitle: string;
+  pageDescription: string;
+  
+  // About Section
+  aboutSuperheading: string;
+  aboutHeading: string;
+  aboutDescription: string;
+  aboutButtonText: string;
+  aboutButtonLink: string;
+  aboutImage: string;
+  aboutImageLight: string;
+  
+  // Our Story Section
+  storySuperheading: string;
+  storyHeading: string;
+  storyParagraphs: string[];
+  
+  // Leadership Team Section
+  teamSuperheading: string;
+  teamHeading: string;
+  teamDescription: string;
+  teamMembers: TeamMember[];
+}
+
+// ============================================
+// BLOG PAGE CONTENT
+// ============================================
+export interface BlogPost {
+  id: string;
+  title: string;
+  category: string;
+  date: string;
+  readTime: string;
+  excerpt: string;
+  extendedExcerpt?: string;
+  image: string;
+  slug: string;
+  content?: string;
+  order: number;
+}
+
+export interface BlogPageContent {
+  pageTitle: string;
+  pageDescription: string;
+  posts: BlogPost[];
+}
+
+// ============================================
+// SERVICES PAGE CONTENT
+// ============================================
+export interface ServiceBlock {
+  id: string;
+  superheading: string;
+  title: string;
+  paragraphs: string[];
+  ctaText: string;
+  ctaLink: string;
+  imageSrc: string;
+  imageAlt: string;
+  isReversed: boolean;
+  order: number;
+}
+
+export interface ServicesPageContent {
+  pageTitle: string;
+  pageBreadcrumb: string;
+  pageDescription: string;
+  blocks: ServiceBlock[];
+}
+
+// ============================================
+// GLOBAL PRESENCE PAGE CONTENT
+// ============================================
+export interface LocationDesignation {
+  type: string;
+  color: string;
+}
+
+export interface GlobalLocation {
+  id: string;
+  name: string;
+  designations: LocationDesignation[];
+  x: number;
+  y: number;
+}
+
+export interface GlobalPresencePageContent {
+  pageTitle: string;
+  pageDescription: string;
+  locations: GlobalLocation[];
+}
+
+// ============================================
+// JOIN PAGE CONTENT
+// ============================================
+export interface JoinPageContent {
+  pageTitle: string;
+  pageDescription: string;
+  formTitle: string;
+  formDescription: string;
+  successTitle: string;
+  successMessage: string;
+  successButtonText: string;
+  successButtonLink: string;
+}
+
+// ============================================
+// ALL SITE CONTENT
+// ============================================
+export interface AllPagesContent {
+  homepage: HomepageContent;
+  aboutPage: AboutPageContent;
+  blogPage: BlogPageContent;
+  servicesPage: ServicesPageContent;
+  globalPresencePage: GlobalPresencePageContent;
+  joinPage: JoinPageContent;
+}
+
+// ============================================
 // DEFAULT CONTENT (fallback when Firestore is empty)
 // ============================================
 export const defaultHeroContent: HeroContent = {
@@ -407,4 +542,223 @@ export const defaultHomepageContent: HomepageContent = {
   testimonials: defaultTestimonialsContent,
   faq: defaultFAQContent,
   contact: defaultContactContent
+};
+
+// ============================================
+// DEFAULT ABOUT PAGE CONTENT
+// ============================================
+export const defaultAboutPageContent: AboutPageContent = {
+  pageTitle: "About us",
+  pageDescription: "Learn more about Globonexo and our journey to becoming a trusted IT partner.",
+  
+  aboutSuperheading: "about us",
+  aboutHeading: "The best IT solution since 2015",
+  aboutDescription: "At Globonexo, we implement innovative IT solutions focused on the evolution, adaptation, and growth of your business. Our emphasis on quality, efficiency, and long-term partnerships ensures that every project delivers tangible results and lasting success.",
+  aboutButtonText: "Join now",
+  aboutButtonLink: "/join",
+  aboutImage: "/about_us.png",
+  aboutImageLight: "/about_us_light_mode.png",
+  
+  storySuperheading: "our story",
+  storyHeading: "The journey and background of the company",
+  storyParagraphs: [
+    "Globonexo was born out of a shared vision between two passionate entrepreneurs in Warsaw, Poland. After countless discussions, deep research, and leveraging our international experience and expertise, we recognised a growing need – businesses across Europe and the U.S. required skilled IT talent to drive innovation, but access to top developers was often limited by local availability and high costs.",
+    "This insight prompted us to start Globonexo: a company that unites businesses with global IT talent through strategic outstaffing solutions. From its very beginning, our goal was to bridge the gap between companies and talented engineers with the help of the development services from our Indian, Polish, Ukrainian, and Moldovan centres with high-quality service providers.",
+    "Starting as an idea over brainstorming sessions in Warsaw, the company has grown into a firm serving clients from various industries such as automotive, fintech, healthcare, and manufacturing.",
+    "Our story at Globonexo is that of collaboration, growth, and global connectivity. We believe that innovation knows no borders, and by empowering companies with the right talent, we help them unlock new possibilities and scale to greater heights.",
+    "This is just the beginning – and we're excited to grow alongside our clients, partners, and dedicated team of developers worldwide."
+  ],
+  
+  teamSuperheading: "leadership team",
+  teamHeading: "Bios and photos of key executives and managers",
+  teamDescription: "Meet the talented individuals who drive our company forward with their expertise and dedication.",
+  teamMembers: [
+    {
+      id: "1",
+      name: "Bodih Dgmas",
+      role: "front-end developer",
+      photo: "/team_member_1.png",
+      linkedinUrl: "#",
+      facebookUrl: "#",
+      twitterUrl: "#",
+      instagramUrl: "#",
+      order: 1
+    },
+    {
+      id: "2",
+      name: "Ahmad Errami",
+      role: "back-end developer",
+      photo: "/team_member_2.png",
+      linkedinUrl: "#",
+      facebookUrl: "#",
+      twitterUrl: "#",
+      instagramUrl: "#",
+      order: 2
+    },
+    {
+      id: "3",
+      name: "John Smith",
+      role: "web designer",
+      photo: "/team_member_3.png",
+      linkedinUrl: "#",
+      facebookUrl: "#",
+      twitterUrl: "#",
+      instagramUrl: "#",
+      order: 3
+    },
+    {
+      id: "4",
+      name: "Satoshi Nakamoto",
+      role: "CEO founder",
+      photo: "/team_member_4.png",
+      linkedinUrl: "#",
+      facebookUrl: "#",
+      twitterUrl: "#",
+      instagramUrl: "#",
+      order: 4
+    }
+  ]
+};
+
+// ============================================
+// DEFAULT BLOG PAGE CONTENT
+// ============================================
+export const defaultBlogPageContent: BlogPageContent = {
+  pageTitle: "Blog",
+  pageDescription: "Stay updated with the latest insights, trends, and news from the IT industry.",
+  posts: [
+    {
+      id: "1",
+      title: "What is digital marketing and why is important?",
+      category: "Marketing",
+      date: "January 20, 2025",
+      readTime: "5 minutes",
+      excerpt: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo earum id assumenda ad neque recusandae, quasi delenti voluptatum eos vel quas molestias?",
+      extendedExcerpt: "Explicabo earum id assumenda ad neque recusandae, quasi delenti voluptatum eos vel quas molestias? Lorem ipsum, dolor sit amet consectetur adipisicing elit.",
+      image: "/blog_1.png",
+      slug: "what-is-digital-marketing",
+      order: 1
+    },
+    {
+      id: "2",
+      title: "The future of AI in software development",
+      category: "Technology",
+      date: "January 15, 2025",
+      readTime: "7 minutes",
+      excerpt: "Discover how artificial intelligence is revolutionizing the way we build and maintain software applications.",
+      image: "/blog_2.png",
+      slug: "future-of-ai-software-development",
+      order: 2
+    },
+    {
+      id: "3",
+      title: "Best practices for remote team management",
+      category: "Management",
+      date: "January 10, 2025",
+      readTime: "6 minutes",
+      excerpt: "Learn effective strategies for managing distributed teams across different time zones and cultures.",
+      image: "/blog_3.png",
+      slug: "remote-team-management",
+      order: 3
+    },
+    {
+      id: "4",
+      title: "Scaling your startup with the right IT infrastructure",
+      category: "Startups",
+      date: "January 5, 2025",
+      readTime: "8 minutes",
+      excerpt: "Essential tips for building a robust and scalable IT infrastructure that grows with your business.",
+      image: "/blog_4.png",
+      slug: "scaling-startup-it-infrastructure",
+      order: 4
+    }
+  ]
+};
+
+// ============================================
+// DEFAULT SERVICES PAGE CONTENT
+// ============================================
+export const defaultServicesPageContent: ServicesPageContent = {
+  pageTitle: "Software Testing",
+  pageBreadcrumb: "Software Testing",
+  pageDescription: "Ensure flawless performance with our comprehensive software testing solutions.",
+  blocks: [
+    {
+      id: "1",
+      superheading: "quality assurance",
+      title: "End-to-End Software Testing Solutions",
+      paragraphs: [
+        "Our comprehensive testing services cover every aspect of your software development lifecycle. From unit testing to integration testing, we ensure your applications perform flawlessly under all conditions.",
+        "We employ industry-leading methodologies and tools to identify and eliminate bugs before they reach your users, saving you time and resources while maintaining the highest quality standards."
+      ],
+      ctaText: "GET STARTED",
+      ctaLink: "/contact",
+      imageSrc: "",
+      imageAlt: "Software Testing",
+      isReversed: false,
+      order: 1
+    },
+    {
+      id: "2",
+      superheading: "automation",
+      title: "Automated Testing for Continuous Delivery",
+      paragraphs: [
+        "Accelerate your release cycles with our automated testing solutions. We build robust test suites that integrate seamlessly with your CI/CD pipeline, enabling faster and more reliable deployments.",
+        "Our automation experts work with leading frameworks like Selenium, Cypress, and Playwright to create maintainable and scalable test automation that grows with your application."
+      ],
+      ctaText: "LEARN MORE",
+      ctaLink: "/contact",
+      imageSrc: "",
+      imageAlt: "Automated Testing",
+      isReversed: true,
+      order: 2
+    }
+  ]
+};
+
+// ============================================
+// DEFAULT GLOBAL PRESENCE PAGE CONTENT
+// ============================================
+export const defaultGlobalPresencePageContent: GlobalPresencePageContent = {
+  pageTitle: "Global Presence",
+  pageDescription: "Explore our international footprint across Europe, India, and North America.",
+  locations: [
+    { id: "usa", name: "USA – Boston", designations: [{ type: "Sales & Representation office", color: "#FAAD14" }], x: 4.8, y: 44 },
+    { id: "uk", name: "United Kingdom – London", designations: [{ type: "Sales & Representation office", color: "#FAAD14" }], x: 40.3, y: 31.2 },
+    { id: "germany", name: "Germany – Stuttgart", designations: [{ type: "Sales & Representation office", color: "#FAAD14" }, { type: "Headquarters", color: "#FF4D4F" }], x: 45, y: 35 },
+    { id: "lithuania", name: "Lithuania – Vilnius", designations: [{ type: "Development center", color: "#95DE64" }], x: 52.5, y: 26 },
+    { id: "latvia", name: "Latvia – Riga", designations: [{ type: "Development center", color: "#95DE64" }], x: 53.8, y: 23 },
+    { id: "poland", name: "Poland – Warsaw", designations: [{ type: "Development center", color: "#95DE64" }], x: 51, y: 30 },
+    { id: "czechia", name: "Czech Republic – Prague", designations: [{ type: "Development center", color: "#95DE64" }], x: 48, y: 34.3 },
+    { id: "ukraine", name: "Ukraine – Kyiv", designations: [{ type: "Development center", color: "#95DE64" }], x: 56, y: 34 },
+    { id: "moldova", name: "Moldova – Chisinau", designations: [{ type: "Development center", color: "#95DE64" }], x: 55, y: 37.3 },
+    { id: "india", name: "India – Delhi", designations: [{ type: "Development center", color: "#95DE64" }], x: 79.5, y: 60 },
+    { id: "vietnam", name: "Vietnam – Hanoi", designations: [{ type: "Development center", color: "#95DE64" }], x: 95.3, y: 76 }
+  ]
+};
+
+// ============================================
+// DEFAULT JOIN PAGE CONTENT
+// ============================================
+export const defaultJoinPageContent: JoinPageContent = {
+  pageTitle: "Join us",
+  pageDescription: "Become part of our global team of IT professionals and work on exciting projects.",
+  formTitle: "Application Form",
+  formDescription: "Fill out the form below to apply for a position at Globonexo.",
+  successTitle: "Application Sent Successfully!",
+  successMessage: "Thank you for your interest in joining Globonexo. We will review your application and get back to you soon.",
+  successButtonText: "Back to home",
+  successButtonLink: "/"
+};
+
+// ============================================
+// DEFAULT ALL PAGES CONTENT
+// ============================================
+export const defaultAllPagesContent: AllPagesContent = {
+  homepage: defaultHomepageContent,
+  aboutPage: defaultAboutPageContent,
+  blogPage: defaultBlogPageContent,
+  servicesPage: defaultServicesPageContent,
+  globalPresencePage: defaultGlobalPresencePageContent,
+  joinPage: defaultJoinPageContent
 };

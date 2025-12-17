@@ -4,108 +4,26 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import LiquidBackground from "@/components/LiquidBackground";
 import { useTheme } from "@/context/ThemeContext";
+import { useContent } from "@/context/ContentContext";
 import Link from "next/link";
 import { useState } from "react";
 
-// Location data with positions (percentages based on map image)
-const locations = [
-  // USA – Boston (yellow dot on left side)
-  {
-    id: 'usa',
-    name: 'USA – Boston',
-    designations: [{ type: 'Sales & Representation office', color: '#FAAD14' }],
-    x: 4.8,
-    y: 44,
-  },
-  // United Kingdom – London (yellow dot)
-  {
-    id: 'uk',
-    name: 'United Kingdom – London',
-    designations: [{ type: 'Sales & Representation office', color: '#FAAD14' }],
-    x: 40.3,
-    y: 31.2,
-  },
-  // Germany – Stuttgart (red dot - both HQ and Sales)
-  {
-    id: 'germany',
-    name: 'Germany – Stuttgart',
-    designations: [
-      { type: 'Sales & Representation office', color: '#FAAD14' },
-      { type: 'Headquarters', color: '#FF4D4F' },
-    ],
-    x: 45,
-    y: 35,
-  },
-  // Lithuania – Vilnius (green dot)
-  {
-    id: 'lithuania',
-    name: 'Lithuania – Vilnius',
-    designations: [{ type: 'Development center', color: '#95DE64' }],
-    x: 52.5,
-    y: 26,
-  },
-  // Latvia – Riga (green dot)
-  {
-    id: 'latvia',
-    name: 'Latvia – Riga',
-    designations: [{ type: 'Development center', color: '#95DE64' }],
-    x: 53.8,
-    y: 23,
-  },
-  // Poland – Warsaw (green dot)
-  {
-    id: 'poland',
-    name: 'Poland – Warsaw',
-    designations: [{ type: 'Development center', color: '#95DE64' }],
-    x: 51,
-    y: 30,
-  },
-  // Czech Republic – Prague (green dot)
-  {
-    id: 'czechia',
-    name: 'Czech Republic – Prague',
-    designations: [{ type: 'Development center', color: '#95DE64' }],
-    x: 48,
-    y: 34.3,
-  },
-  // Ukraine – Kyiv (green dot)
-  {
-    id: 'ukraine',
-    name: 'Ukraine – Kyiv',
-    designations: [{ type: 'Development center', color: '#95DE64' }],
-    x: 56,
-    y: 34,
-  },
-  // Moldova – Chisinau (green dot)
-  {
-    id: 'moldova',
-    name: 'Moldova – Chisinau',
-    designations: [{ type: 'Development center', color: '#95DE64' }],
-    x: 55,
-    y: 37.3,
-  },
-  // India – Delhi (green dot)
-  {
-    id: 'india',
-    name: 'India – Delhi',
-    designations: [{ type: 'Development center', color: '#95DE64' }],
-    x: 79.5,
-    y: 60,
-  },
-  // Vietnam – Hanoi (green dot)
-  {
-    id: 'vietnam',
-    name: 'Vietnam – Hanoi',
-    designations: [{ type: 'Development center', color: '#95DE64' }],
-    x: 95.3,
-    y: 76,
-  },
-];
-
 const GlobalPresencePage = () => {
   const { theme } = useTheme();
+  const { allContent, loading } = useContent();
   const isLightMode = theme === "light";
   const [hoveredLocation, setHoveredLocation] = useState<string | null>(null);
+
+  const pageContent = allContent.globalPresencePage;
+  const locations = pageContent.locations;
+
+  if (loading) {
+    return (
+      <main className="min-h-screen relative overflow-hidden flex items-center justify-center">
+        <div className={isLightMode ? 'text-[#141414]' : 'text-white'}>Loading...</div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen relative overflow-hidden">
@@ -168,7 +86,7 @@ const GlobalPresencePage = () => {
                   lineHeight: 'clamp(18px, 1.53vw, 22px)',
                 }}
               >
-                Global Presence
+                {pageContent.pageTitle}
               </span>
             </div>
 
@@ -182,7 +100,7 @@ const GlobalPresencePage = () => {
                 lineHeight: 'clamp(34px, 3.19vw, 46px)',
               }}
             >
-              Global Presence
+              {pageContent.pageTitle}
             </h1>
 
             {/* Description */}
@@ -196,7 +114,7 @@ const GlobalPresencePage = () => {
                 lineHeight: 'clamp(18px, 1.53vw, 22px)',
               }}
             >
-              Explore our international footprint across Europe, India, and North America.
+              {pageContent.pageDescription}
             </p>
           </div>
         </div>

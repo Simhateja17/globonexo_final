@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import LiquidBackground from "@/components/LiquidBackground";
 import { useTheme } from "@/context/ThemeContext";
+import { useContent } from "@/context/ContentContext";
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useRef, ChangeEvent } from "react";
@@ -30,7 +31,10 @@ const countries = [
 
 const JoinPage = () => {
   const { theme } = useTheme();
+  const { allContent, loading } = useContent();
   const isLightMode = theme === "light";
+  
+  const pageContent = allContent.joinPage;
   
   // Form state
   const [formData, setFormData] = useState({
@@ -202,17 +206,40 @@ const JoinPage = () => {
               />
             </div>
             
+            {/* Success Title */}
+            <h2 className={`text-xl font-medium text-center ${
+              isLightMode ? 'text-[#141414]' : 'text-white'
+            }`}>
+              {pageContent.successTitle}
+            </h2>
+            
             {/* Thank You Message */}
             <p className={`max-w-[450px] text-base font-normal leading-6 text-center ${
               isLightMode ? 'text-[#595959]' : 'text-[#8C8C8C]'
             }`}>
-              Thank you! Your application has been received. Our team will review it and get back to you shortly. We appreciate your interest in Globonexo International!
+              {pageContent.successMessage}
             </p>
+            
+            {/* Back Button */}
+            <Link
+              href={pageContent.successButtonLink}
+              className="inline-flex items-center justify-center min-w-[140px] h-[38px] px-6 py-2 glass-button text-black text-sm font-medium leading-[22px] rounded-xl transition-all duration-200"
+            >
+              {pageContent.successButtonText}
+            </Link>
           </div>
         </section>
         
         <Footer />
         </div>
+      </main>
+    );
+  }
+
+  if (loading) {
+    return (
+      <main className="min-h-screen relative overflow-hidden flex items-center justify-center">
+        <div className={isLightMode ? 'text-[#141414]' : 'text-white'}>Loading...</div>
       </main>
     );
   }
@@ -245,7 +272,7 @@ const JoinPage = () => {
                 /
               </span>
               <span className="text-sm font-normal leading-[22px] text-[#95DE64]">
-                Join now
+                {pageContent.pageTitle}
               </span>
             </div>
 
@@ -253,14 +280,14 @@ const JoinPage = () => {
             <h1 className={`text-[28px] sm:text-[32px] lg:text-[38px] font-medium leading-tight lg:leading-[46px] ${
               isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
             }`}>
-              Your Future Starts Here
+              {pageContent.formTitle}
             </h1>
 
             {/* Description */}
             <p className={`max-w-[1160px] text-sm font-normal leading-[22px] ${
               isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
             }`}>
-              We&apos;re always looking for talented, passionate, and curious people to join our global team. Tell us who you are, and let&apos;s shape the future together.
+              {pageContent.formDescription || pageContent.pageDescription}
             </p>
           </div>
         </div>

@@ -7,6 +7,7 @@ import WhyChooseUsSection from "@/components/WhyChooseUsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import FAQSection from "@/components/FAQSection";
 import { useTheme } from "@/context/ThemeContext";
+import { useContent } from "@/context/ContentContext";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -107,7 +108,19 @@ const ContentBlock = ({
 
 const ServicesPage = () => {
   const { theme } = useTheme();
+  const { allContent, loading } = useContent();
   const isLightMode = theme === "light";
+
+  const pageContent = allContent.servicesPage;
+  const sortedBlocks = [...pageContent.blocks].sort((a, b) => a.order - b.order);
+
+  if (loading) {
+    return (
+      <main className="min-h-screen relative overflow-hidden flex items-center justify-center">
+        <div className={isLightMode ? 'text-[#141414]' : 'text-white'}>Loading...</div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen relative overflow-hidden">
@@ -150,7 +163,7 @@ const ServicesPage = () => {
                 /
               </span>
               <span className="text-sm font-normal leading-[22px] text-[#95DE64]">
-                Software Testing
+                {pageContent.pageBreadcrumb}
               </span>
             </div>
 
@@ -158,46 +171,34 @@ const ServicesPage = () => {
             <h1 className={`text-[28px] sm:text-[32px] lg:text-[38px] font-medium leading-tight lg:leading-[46px] ${
               isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
             }`}>
-              Software Testing
+              {pageContent.pageTitle}
             </h1>
 
             {/* Description */}
             <p className={`max-w-[1160px] text-sm font-normal leading-[22px] ${
               isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
             }`}>
-              Although, final stages of the internal network gives a complete experience of The Parameter of Speculative Environment
+              {pageContent.pageDescription}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Content Block 1 - Image on Right */}
-      <ContentBlock
-        superheading="block small title"
-        title="Block h2 title"
-        paragraphs={[
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis lacus felis. Cras gravida pulvinar auctor. Nunc est dui, volutpat eu arcu sed, egestas commodo nisl. Proin tempus orci a urna fermentum dignissim. Donec rhoncus vel quam ut dignissim. Aenean lacinia eros eros, quis molestie magna congue porta. Mauris lorem enim, tincidunt in nibh eu, placerat hendrerit augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          "Fusce quis lacus felis. Cras gravida pulvinar auctor. Nunc est dui, volutpat eu arcu sed, egestas commodo nisl. Proin tempus orci a urna fermentum dignissim. Donec rhoncus vel quam ut dignissim. Aenean lacinia eros eros, quis molestie magna congue porta. Mauris lorem enim, tincidunt in nibh eu, placerat hendrerit augue."
-        ]}
-        ctaText="CTA BUTTON"
-        ctaLink="#"
-        isReversed={false}
-        isLightMode={isLightMode}
-      />
-
-      {/* Content Block 2 - Image on Left (Mirrored) */}
-      <ContentBlock
-        superheading="block small title"
-        title="Block h2 title"
-        paragraphs={[
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce quis lacus felis. Cras gravida pulvinar auctor. Nunc est dui, volutpat eu arcu sed, egestas commodo nisl. Proin tempus orci a urna fermentum dignissim. Donec rhoncus vel quam ut dignissim. Aenean lacinia eros eros, quis molestie magna congue porta. Mauris lorem enim, tincidunt in nibh eu, placerat hendrerit augue.Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-          "Fusce quis lacus felis. Cras gravida pulvinar auctor. Nunc est dui, volutpat eu arcu sed, egestas commodo nisl. Proin tempus orci a urna fermentum dignissim. Donec rhoncus vel quam ut dignissim. Aenean lacinia eros eros, quis molestie magna congue porta. Mauris lorem enim, tincidunt in nibh eu, placerat hendrerit augue."
-        ]}
-        ctaText="CTA BUTTON"
-        ctaLink="#"
-        isReversed={true}
-        isLightMode={isLightMode}
-      />
+      {/* Dynamic Content Blocks */}
+      {sortedBlocks.map((block) => (
+        <ContentBlock
+          key={block.id}
+          superheading={block.superheading}
+          title={block.title}
+          paragraphs={block.paragraphs}
+          ctaText={block.ctaText}
+          ctaLink={block.ctaLink}
+          imageSrc={block.imageSrc}
+          imageAlt={block.imageAlt}
+          isReversed={block.isReversed}
+          isLightMode={isLightMode}
+        />
+      ))}
 
       {/* Why Choose Us Section */}
       <WhyChooseUsSection />
