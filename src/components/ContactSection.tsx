@@ -3,9 +3,12 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { useContent } from "@/context/ContentContext";
 
 const ContactSection = () => {
   const { theme } = useTheme();
+  const { content } = useContent();
+  const contactContent = content.contact;
   const isLightMode = theme === "light";
   
   const [formData, setFormData] = useState({
@@ -28,12 +31,12 @@ const ContactSection = () => {
     console.log("Form submitted:", formData);
   };
 
-  const socialLinks = [
-    { icon: "/instagram.png", alt: "Instagram", href: "#" },
-    { icon: "/twitter.png", alt: "Twitter", href: "#" },
-    { icon: "/facebook.png", alt: "Facebook", href: "#" },
-    { icon: "/youtube.png", alt: "YouTube", href: "#" },
-  ];
+  // Use content from Firestore
+  const socialLinks = contactContent.socialLinks.map(link => ({
+    icon: link.icon,
+    alt: link.alt,
+    href: link.href,
+  }));
 
   return (
     <section 
@@ -44,21 +47,21 @@ const ContactSection = () => {
         <div className="mb-8 lg:mb-10">
           {/* Superheading */}
           <p className="font-mono text-xs font-normal leading-5 text-[#95DE64] mb-2 tracking-wide">
-            contact
+            {contactContent.superheading}
           </p>
 
           {/* Main Heading */}
           <h2 className={`text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] mb-4 ${
             isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
           }`}>
-            Contact us for Any Questions
+            {contactContent.heading}
           </h2>
 
           {/* Description */}
           <p className={`max-w-[1160px] text-sm font-normal leading-[22px] ${
             isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
           }`}>
-            Let's Connect and Find the Right Solutions for You!
+            {contactContent.description}
           </p>
         </div>
 
@@ -72,7 +75,7 @@ const ContactSection = () => {
             <h3 className={`text-xl lg:text-2xl font-medium leading-8 ${
               isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
             }`}>
-              Contact Info
+              {contactContent.contactCardTitle}
             </h3>
 
             {/* Contact Details */}
@@ -89,7 +92,7 @@ const ContactSection = () => {
                 <span className={`text-sm font-normal leading-[22px] ${
                   isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
                 }`}>
-                  conatct.global@globonexo.com
+                  {contactContent.contactInfo.email}
                 </span>
               </div>
 
@@ -105,7 +108,7 @@ const ContactSection = () => {
                 <span className={`text-sm font-normal leading-[22px] ${
                   isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
                 }`}>
-                  +49 711 123456
+                  {contactContent.contactInfo.phone}
                 </span>
               </div>
 
@@ -121,7 +124,7 @@ const ContactSection = () => {
                 <span className={`text-sm font-normal leading-[22px] ${
                   isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
                 }`}>
-                  Headquarters: Koenigstr. 10c, 70173 Stuttgart, Germany
+                  {contactContent.contactInfo.address}
                 </span>
               </div>
 
@@ -137,7 +140,7 @@ const ContactSection = () => {
                 <span className={`text-sm font-normal leading-[22px] ${
                   isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
                 }`}>
-                  +49 711 123456
+                  {contactContent.contactInfo.phone2}
                 </span>
               </div>
             </div>

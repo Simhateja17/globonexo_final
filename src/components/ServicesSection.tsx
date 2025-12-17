@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { useContent } from "@/context/ContentContext";
 
 interface ServiceCardProps {
   icon: string;
@@ -71,36 +72,19 @@ const ServicesSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isInteracting, setIsInteracting] = useState(false);
   const { theme } = useTheme();
+  const { content } = useContent();
+  const servicesContent = content.services;
   const isLightMode = theme === "light";
 
-  const services = [
-    {
-      icon: "🤝",
-      title: "Outstaffing Solutions",
-      description: "Expertise in staff augmentation, dedicated teams, EOR (Employer of Record), and PEO (Professional Employer Organization) models.",
-      isGreenTitle: false,
-    },
-    {
-      icon: "🐞",
-      title: "Software Testing Services",
-      description: "Comprehensive QA and testing services to ensure robust, high-performance, and error-free software. Specialized in manual, automated, and performance testing for diverse industries.",
-      isGreenTitle: true,
-    },
-    {
-      icon: "🛠️",
-      title: "IT & AI Helpdesk Services",
-      description: "Reliable 24/7 multilingual IT & AI support tailored to businesses of all sizes. Focused on enhancing customer satisfaction with fast and efficient issue resolution.",
-      isGreenTitle: false,
-    },
-    {
-      icon: "🧩",
-      title: "Custom Solutions for Unique Needs",
-      description: "Bespoke IT & AI and software solutions designed to address specific challenges and goals. Emphasis on scalability, innovation, and alignment with business strategies.",
-      isGreenTitle: false,
-    },
-  ];
 
-  // Auto-scroll animation - works on both desktop and mobile
+  // Use content from Firestore
+  const services = servicesContent.cards.map(card => ({
+    icon: card.icon,
+    title: card.title,
+    description: card.description,
+    isGreenTitle: card.isGreenTitle,
+    learnMoreLink: card.learnMoreLink,
+  }));
   useEffect(() => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
@@ -140,21 +124,21 @@ const ServicesSection = () => {
         <div className="mb-[10.25vw] sm:mb-8 lg:mb-12">
           {/* Superheading */}
           <p className="font-mono text-xs font-normal leading-5 text-[#95DE64] mb-2 tracking-wide uppercase">
-            our services
+            {servicesContent.superheading}
           </p>
 
           {/* Main Heading */}
           <h2 className={`text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] mb-4 ${
             isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
           }`}>
-            What we're offering
+            {servicesContent.heading}
           </h2>
 
           {/* Description */}
           <p className={`max-w-[1160px] text-sm font-normal leading-[22px] ${
             isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
           }`}>
-            We specialize in outstaffing solutions, including staff augmentation and dedicated teams, alongside software testing, and 24/7 multilingual IT & AI helpdesk services. With expertise in modern technologies like AI, ML, cloud solutions, and a deep understanding of the European market, we deliver tailored solutions that drive innovation and scalability.
+            {servicesContent.description}
           </p>
         </div>
       </div>

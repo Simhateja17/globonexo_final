@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { useContent } from "@/context/ContentContext";
 
 interface WhyChooseCardProps {
   icon: string;
@@ -41,35 +42,16 @@ const WhyChooseUsSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isInteracting, setIsInteracting] = useState(false);
   const { theme } = useTheme();
+  const { content } = useContent();
+  const whyChooseUsContent = content.whyChooseUs;
   const isLightMode = theme === "light";
 
-  const cards = [
-    {
-      icon: "💼",
-      title: "Built on Expertise",
-      description: "While Globonexo is new, the extensive experience of our founders ensures we deliver exceptional results tailored to your goals.",
-    },
-    {
-      icon: "🌍",
-      title: "Global Talent Pool",
-      description: "Our development center offer access to top-tier IT & AI professionals from India and Eastern Europe, ready to execute your vision.",
-    },
-    {
-      icon: "⚖️",
-      title: "Cost Efficiency",
-      description: "Save on recruitment and operational costs without compromising on quality.",
-    },
-    {
-      icon: "📈",
-      title: "Flexibility and Scalability",
-      description: "Adapt your team size to your project's requirements, giving you unparalleled agility.",
-    },
-    {
-      icon: "🧑‍💻",
-      title: "Cultural and Technical Alignment",
-      description: "We bridge global talent with local needs, ensuring seamless collaboration and delivery.",
-    },
-  ];
+  // Use content from Firestore
+  const cards = whyChooseUsContent.cards.map(card => ({
+    icon: card.icon,
+    title: card.title,
+    description: card.description,
+  }));
 
   // Auto-scroll animation - works on both desktop and mobile
   useEffect(() => {
@@ -108,21 +90,21 @@ const WhyChooseUsSection = () => {
       <div className="max-w-[1440px] mx-auto px-5 sm:px-10 lg:px-[140px] mb-8 lg:mb-10">
         {/* Superheading */}
         <p className="font-mono text-xs font-normal leading-5 text-[#95DE64] mb-2 tracking-wide">
-          why choose us
+          {whyChooseUsContent.superheading}
         </p>
 
         {/* Main Heading */}
         <h2 className={`text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] mb-4 ${
           isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
         }`}>
-          Why Our Clients Choose Globonexo
+          {whyChooseUsContent.heading}
         </h2>
 
         {/* Description */}
         <p className={`max-w-[1160px] text-sm font-normal leading-[22px] ${
           isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
         }`}>
-          We offer seamless collaboration, access to cutting-edge technologies, and tailored solutions that help businesses grow and stay ahead in a competitive market. With a commitment to quality, innovation, and customer satisfaction, we empower our clients to achieve their goals faster and more efficiently.
+          {whyChooseUsContent.description}
         </p>
       </div>
 

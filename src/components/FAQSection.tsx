@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { useContent } from "@/context/ContentContext";
 
 interface FAQItemProps {
   question: string;
@@ -62,77 +63,26 @@ const FAQItem = ({ question, answer, isOpen, onClick, isLightMode = false }: FAQ
 const FAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const { theme } = useTheme();
+  const { content } = useContent();
+  const faqContent = content.faq;
   const isLightMode = theme === "light";
 
-  const leftColumnFAQs = [
-    {
-      question: "Can we choose and interview developers ourselves?",
-      answer: "Yes, you have full control over the selection process. We provide you with pre-vetted candidates, and you can interview them to ensure they meet your specific requirements before making a decision.",
-    },
-    {
-      question: "How do you ensure developer quality and productivity?",
-      answer: "We have a rigorous vetting process that includes technical assessments, code reviews, and soft skills evaluation. We also provide ongoing performance monitoring and regular check-ins to ensure consistent quality.",
-    },
-    {
-      question: "What is IT & AI outstaffing and how does it differ from outsourcing?",
-      answer: "IT & AI outstaffing means you hire dedicated developers who work exclusively for you while we handle HR and administrative tasks. Unlike outsourcing, you maintain direct control over the team and their work.",
-    },
-    {
-      question: "How do you select the developers we will work with?",
-      answer: "We match developers based on your technical requirements, project needs, and cultural fit. Our talent pool includes pre-vetted professionals with diverse skills and experience levels.",
-    },
-    {
-      question: "How do you select the developers we will work with?",
-      answer: "We match developers based on your technical requirements, project needs, and cultural fit. Our talent pool includes pre-vetted professionals with diverse skills and experience levels.",
-    },
-    {
-      question: "How do you select the developers we will work with?",
-      answer: "We match developers based on your technical requirements, project needs, and cultural fit. Our talent pool includes pre-vetted professionals with diverse skills and experience levels.",
-    },
-    {
-      question: "How do you select the developers we will work with?",
-      answer: "We match developers based on your technical requirements, project needs, and cultural fit. Our talent pool includes pre-vetted professionals with diverse skills and experience levels.",
-    },
-    {
-      question: "How do you select the developers we will work with?",
-      answer: "We match developers based on your technical requirements, project needs, and cultural fit. Our talent pool includes pre-vetted professionals with diverse skills and experience levels.",
-    },
-  ];
+  // Use content from Firestore
+  const leftColumnFAQs = faqContent.items
+    .filter(item => item.column === 'left')
+    .sort((a, b) => a.order - b.order)
+    .map(item => ({
+      question: item.question,
+      answer: item.answer,
+    }));
 
-  const rightColumnFAQs = [
-    {
-      question: "What tech stacks do your developers use?",
-      answer: "Our developers are proficient in a wide range of technologies including React, Angular, Vue.js, Node.js, Python, Java, .NET, AWS, Azure, and many more. We can match expertise to your specific stack.",
-    },
-    {
-      question: "How is outstaffing priced?",
-      answer: "Our pricing is transparent and competitive. You pay a monthly rate per developer that covers their salary, benefits, workspace, and our management fee. No hidden costs or surprises.",
-    },
-    {
-      question: "How does your pricing compare to other outstaffing providers?",
-      answer: "We offer competitive rates while maintaining high quality. Our pricing reflects the value of our rigorous vetting process, ongoing support, and access to top-tier talent from India and Eastern Europe.",
-    },
-    {
-      question: "How does your pricing compare to other outstaffing providers?",
-      answer: "We offer competitive rates while maintaining high quality. Our pricing reflects the value of our rigorous vetting process, ongoing support, and access to top-tier talent from India and Eastern Europe.",
-    },
-    {
-      question: "How does your pricing compare to other outstaffing providers?",
-      answer: "We offer competitive rates while maintaining high quality. Our pricing reflects the value of our rigorous vetting process, ongoing support, and access to top-tier talent from India and Eastern Europe.",
-    },
-    {
-      question: "How does your pricing compare to other outstaffing providers?",
-      answer: "We offer competitive rates while maintaining high quality. Our pricing reflects the value of our rigorous vetting process, ongoing support, and access to top-tier talent from India and Eastern Europe.",
-    },
-    {
-      question: "How does your pricing compare to other outstaffing providers?",
-      answer: "We offer competitive rates while maintaining high quality. Our pricing reflects the value of our rigorous vetting process, ongoing support, and access to top-tier talent from India and Eastern Europe.",
-    },
-    {
-      question: "How does your pricing compare to other outstaffing providers?",
-      answer: "We offer competitive rates while maintaining high quality. Our pricing reflects the value of our rigorous vetting process, ongoing support, and access to top-tier talent from India and Eastern Europe.",
-    },
-  ];
+  const rightColumnFAQs = faqContent.items
+    .filter(item => item.column === 'right')
+    .sort((a, b) => a.order - b.order)
+    .map(item => ({
+      question: item.question,
+      answer: item.answer,
+    }));
 
   const handleClick = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -145,21 +95,21 @@ const FAQSection = () => {
         <div className="mb-8 lg:mb-10">
           {/* Superheading */}
           <p className="font-mono text-xs font-normal leading-5 text-[#95DE64] mb-2 tracking-wide">
-            faq
+            {faqContent.superheading}
           </p>
 
           {/* Main Heading */}
           <h2 className={`text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] mb-4 ${
             isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
           }`}>
-            Frequently Asked Questions
+            {faqContent.heading}
           </h2>
 
           {/* Description */}
           <p className={`max-w-[1160px] text-sm font-normal leading-[22px] ${
             isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
           }`}>
-            Got Questions? We've Got Answers to Help You Understand Globonexo Better!
+            {faqContent.description}
           </p>
         </div>
 

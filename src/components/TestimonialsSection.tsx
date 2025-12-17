@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { useContent } from "@/context/ContentContext";
 
 interface TestimonialCardProps {
   quote: string;
@@ -48,30 +49,16 @@ const TestimonialsSection = () => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isInteracting, setIsInteracting] = useState(false);
   const { theme } = useTheme();
+  const { content } = useContent();
+  const testimonialsContent = content.testimonials;
   const isLightMode = theme === "light";
 
-  const testimonials = [
-    {
-      quote: "«Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, labore dolore laborum dolorum culpa ducimus ipsam quo, veniam animi pariatur facilis tempora incidunt nostrum quisquam, cum quasi laudantium? Voluptates, sequi? Possimus ipsa, excepturi praesentium dolore quae placeat voluptatem doloremque deserunt?»",
-      name: "Satya Nadella",
-      title: "Chief Executive Officer, Microsoft",
-    },
-    {
-      quote: "«Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, labore dolore laborum dolorum culpa ducimus ipsam quo, veniam animi pariatur facilis tempora incidunt nostrum quisquam, cum quasi laudantium? Voluptates, sequi? Possimus ipsa, excepturi praesentium dolore quae placeat voluptatem doloremque deserunt?»",
-      name: "Andy Jassy",
-      title: "Chief Executive Officer, Amazon",
-    },
-    {
-      quote: "«Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, labore dolore laborum dolorum culpa ducimus ipsam quo, veniam animi pariatur facilis tempora incidunt nostrum quisquam, cum quasi laudantium? Voluptates, sequi? Possimus ipsa, excepturi praesentium dolore quae placeat voluptatem doloremque deserunt?»",
-      name: "Sundar Pichai",
-      title: "Chief Executive Officer, Alphabet (Google)",
-    },
-    {
-      quote: "«Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit, labore dolore laborum dolorum culpa ducimus ipsam quo, veniam animi pariatur facilis tempora incidunt nostrum quisquam, cum quasi laudantium? Voluptates, sequi? Possimus ipsa, excepturi praesentium dolore quae placeat voluptatem doloremque deserunt?»",
-      name: "Tim Cook",
-      title: "Chief Executive Officer, Apple",
-    },
-  ];
+  // Use content from Firestore
+  const testimonials = testimonialsContent.testimonials.map(t => ({
+    quote: t.quote,
+    name: t.name,
+    title: t.title,
+  }));
 
   // Auto-scroll animation - works on both desktop and mobile
   useEffect(() => {
@@ -112,21 +99,21 @@ const TestimonialsSection = () => {
       <div className="max-w-[1440px] mx-auto px-[6.15vw] sm:px-10 lg:px-[140px] mb-[10.25vw] sm:mb-8 lg:mb-10">
         {/* Superheading */}
         <p className="font-mono text-xs font-normal leading-5 text-[#95DE64] mb-2 tracking-wide">
-          testimonials
+          {testimonialsContent.superheading}
         </p>
 
         {/* Main Heading */}
         <h2 className={`text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] mb-4 ${
           isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
         }`}>
-          Customers Testmonials
+          {testimonialsContent.heading}
         </h2>
 
         {/* Description */}
         <p className={`max-w-[1160px] text-sm font-normal leading-[22px] ${
           isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
         }`}>
-          Hear What Our Customers Say About Partnering with Globonexo!Hear What Our Customers Say About Partnering with Globonexo!
+          {testimonialsContent.description}
         </p>
       </div>
 

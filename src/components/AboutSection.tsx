@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
+import { useContent } from "@/context/ContentContext";
 
 interface StatCardProps {
   value: string;
@@ -81,14 +82,15 @@ const StatCard = ({ value, label, isLightMode = false }: StatCardProps) => {
 
 const AboutSection = () => {
   const { theme } = useTheme();
+  const { content } = useContent();
+  const aboutContent = content.about;
   const isLightMode = theme === "light";
 
-  const stats = [
-    { value: "9", label: "countries" },
-    { value: "3", label: "continents" },
-    { value: "320", label: "IT talents in our pool" },
-    { value: "15", label: "industries" },
-  ];
+  // Use content from Firestore
+  const stats = aboutContent.stats.map(stat => ({
+    value: stat.value,
+    label: stat.label,
+  }));
 
   return (
     <section 
@@ -109,33 +111,30 @@ const AboutSection = () => {
           <div className="flex-1 max-w-[749px]">
             {/* Superheading */}
             <p className="font-mono text-xs font-normal leading-5 text-[#95DE64] mb-2 tracking-wide">
-              about us
+              {aboutContent.superheading}
             </p>
 
             {/* Main Heading */}
             <h2 className={`text-2xl sm:text-[28px] lg:text-[30px] font-medium leading-tight lg:leading-[40px] mb-6 ${
               isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
             }`}>
-              Driving Innovation Through Global Collaboration
+              {aboutContent.heading}
             </h2>
 
             {/* Description Paragraphs */}
             <div className="space-y-4 mb-8">
-              <p className={`text-sm font-normal leading-[22px] ${
-                isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
-              }`}>
-                Globonexo is an international IT & AI outstaffing company committed to helping European companies grow faster and smarter. Our founders' proven track record in driving innovation and delivering IT & AI solutions positions us as the trusted choice for outstaffing.
-              </p>
-              <p className={`text-sm font-normal leading-[22px] ${
-                isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
-              }`}>
-                We provide businesses with cost-effective, scalable, and high-quality IT resources to meet their unique needs. Whether you're looking to expand your development team, shorten time-to-market, or access niche skills, Globonexo is your strategic partner.
-              </p>
+              {aboutContent.paragraphs.map((paragraph, index) => (
+                <p key={index} className={`text-sm font-normal leading-[22px] ${
+                  isLightMode ? 'text-[#595959]' : 'text-[#BFBFBF]'
+                }`}>
+                  {paragraph}
+                </p>
+              ))}
             </div>
 
             {/* Join Now Button */}
             <button className="bg-[#95DE64] text-black text-sm font-medium leading-[22px] px-6 py-2 rounded-lg hover:bg-[#7bc653] transition-colors min-w-[180px] h-[38px]">
-              Join now
+              {aboutContent.buttonText}
             </button>
           </div>
         </div>
