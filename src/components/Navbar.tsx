@@ -53,7 +53,7 @@ const Navbar = () => {
     { label: "Home", href: "/", hasDropdown: true },
     { label: "About us", href: "/about", hasDropdown: true },
     { label: "Services", href: "/services", hasDropdown: true },
-    { label: "Special expertise", href: "/expertise", hasDropdown: true },
+    { label: "Global presence", href: "/global-presence", hasDropdown: true },
     { label: "Learn more", href: "/blog", hasDropdown: true },
     { label: "Contact", href: "/contact", hasDropdown: true },
   ];
