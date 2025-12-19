@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-const CORRECT_PASSWORD = "MovingForward2026";
+const CORRECT_PASSWORD = "Globonexo@AI2026";
 const STORAGE_KEY = "globonexo_authenticated";
 
 export default function PasswordModal({ children }: { children: React.ReactNode }) {
