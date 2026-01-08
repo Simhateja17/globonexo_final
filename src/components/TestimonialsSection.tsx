@@ -15,7 +15,7 @@ const TestimonialCard = ({ quote, name, title, isLightMode = false }: Testimonia
   // Mobile: 300x326 on 390px screen = 76.9% width, 83.6% height ratio
   // Padding: 24px on 390px = 6.15% | Gap: 24px = 6.15%
   return (
-    <div className={`flex-shrink-0 w-[76.9vw] sm:w-[320px] lg:w-[370px] min-h-[83.6vw] sm:min-h-[280px] lg:min-h-[282px] rounded-[3vw] sm:rounded-2xl lg:rounded-3xl p-[6.15vw] sm:p-5 lg:p-6 flex flex-col gap-[6.15vw] sm:gap-5 lg:gap-6 glass-shimmer ${
+    <div className={`group flex-shrink-0 w-[76.9vw] sm:w-[320px] lg:w-[370px] min-h-[83.6vw] sm:min-h-[280px] lg:min-h-[282px] rounded-[3vw] sm:rounded-2xl lg:rounded-3xl p-[6.15vw] sm:p-5 lg:p-6 flex flex-col gap-[6.15vw] sm:gap-5 lg:gap-6 glass-shimmer ${
       isLightMode ? 'glass-card-light' : 'glass-card'
     }`}>
       {/* Quote */}
@@ -28,8 +28,8 @@ const TestimonialCard = ({ quote, name, title, isLightMode = false }: Testimonia
       {/* Author Info */}
       <div className="flex flex-col gap-1 mt-auto">
         {/* Name */}
-        <h3 className={`text-xl sm:text-[22px] lg:text-2xl font-medium leading-8 ${
-          isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
+        <h3 className={`text-xl sm:text-[22px] lg:text-2xl font-medium leading-8 transition-colors ${
+          isLightMode ? 'text-[#141414] group-hover:text-[#95DE64]' : 'text-[#F0F0F0] group-hover:text-[#95DE64]'
         }`}>
           {name}
         </h3>
@@ -123,7 +123,7 @@ const TestimonialsSection = () => {
           {/* Scrolling Container */}
           <div 
             ref={scrollRef}
-            className="flex gap-[4vw] sm:gap-5 lg:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing touch-pan-x"
+            className="flex gap-[4vw] sm:gap-5 lg:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing touch-pan-x py-8"
             onMouseEnter={() => setIsInteracting(true)}
             onMouseLeave={() => setIsInteracting(false)}
             onTouchStart={() => setIsInteracting(true)}

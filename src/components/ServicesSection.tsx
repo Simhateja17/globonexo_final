@@ -17,7 +17,7 @@ const ServiceCard = ({ icon, title, description, isGreenTitle = false, isLightMo
   // Mobile: 300x358 on 390px screen = 76.9% width, 91.8% height ratio
   // Padding: 24px on 390px = 6.15% | Gap: 24px = 6.15% | Border-radius: 12px = 3.08%
   return (
-    <div className={`flex-shrink-0 w-[76.9vw] sm:w-[320px] lg:w-[370px] min-h-[91.8vw] sm:min-h-[340px] lg:min-h-[358px] rounded-[3.08vw] sm:rounded-2xl lg:rounded-3xl p-[6.15vw] sm:p-5 lg:p-6 flex flex-col gap-[6.15vw] sm:gap-5 lg:gap-6 glass-shimmer ${
+    <div className={`group flex-shrink-0 w-[76.9vw] sm:w-[320px] lg:w-[370px] min-h-[91.8vw] sm:min-h-[340px] lg:min-h-[358px] rounded-[3.08vw] sm:rounded-2xl lg:rounded-3xl p-[6.15vw] sm:p-5 lg:p-6 flex flex-col gap-[6.15vw] sm:gap-5 lg:gap-6 glass-shimmer ${
       isLightMode ? 'glass-card-light' : 'glass-card'
     }`}>
       {/* Icon */}
@@ -27,8 +27,8 @@ const ServiceCard = ({ icon, title, description, isGreenTitle = false, isLightMo
 
       {/* Title */}
       <h3 
-        className={`text-[5.13vw] sm:text-xl lg:text-2xl font-medium leading-[1.33] ${
-          isGreenTitle ? 'text-[#95DE64]' : (isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]')
+        className={`text-[5.13vw] sm:text-xl lg:text-2xl font-medium leading-[1.33] transition-colors ${
+          isLightMode ? 'text-[#141414] group-hover:text-[#95DE64]' : 'text-[#F0F0F0] group-hover:text-[#95DE64]'
         }`}
       >
         {title}
@@ -149,7 +149,7 @@ const ServicesSection = () => {
           {/* Scrolling Container */}
           <div 
             ref={scrollRef}
-            className="flex gap-[4vw] sm:gap-4 lg:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing touch-pan-x"
+            className="flex gap-[4vw] sm:gap-4 lg:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing touch-pan-x py-8"
             onMouseEnter={() => setIsInteracting(true)}
             onMouseLeave={() => setIsInteracting(false)}
             onTouchStart={() => setIsInteracting(true)}

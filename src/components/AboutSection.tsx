@@ -100,7 +100,7 @@ const AboutSection = () => {
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16 items-start">
           {/* Left Side - Stats Grid */}
           <div className="w-full lg:w-auto flex-shrink-0">
-            <div className="grid grid-cols-2 gap-4 lg:gap-6 w-full lg:w-[371px]">
+            <div className="grid grid-cols-2 gap-4 lg:gap-6 w-full lg:w-[371px] py-8">
               {stats.map((stat, index) => (
                 <StatCard key={index} value={stat.value} label={stat.label} isLightMode={isLightMode} />
               ))}

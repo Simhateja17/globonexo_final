@@ -13,7 +13,7 @@ interface WhyChooseCardProps {
 
 const WhyChooseCard = ({ icon, title, description, isLightMode = false }: WhyChooseCardProps) => {
   return (
-    <div className={`flex-shrink-0 w-[240px] sm:w-[260px] lg:w-[272px] h-[280px] sm:h-[290px] lg:h-[302px] rounded-2xl lg:rounded-3xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 glass-shimmer ${
+    <div className={`group flex-shrink-0 w-[240px] sm:w-[260px] lg:w-[272px] h-[280px] sm:h-[290px] lg:h-[302px] rounded-2xl lg:rounded-3xl p-5 lg:p-6 flex flex-col gap-5 lg:gap-6 glass-shimmer ${
       isLightMode ? 'glass-card-light' : 'glass-card'
     }`}>
       {/* Icon */}
@@ -22,8 +22,8 @@ const WhyChooseCard = ({ icon, title, description, isLightMode = false }: WhyCho
       </div>
 
       {/* Title */}
-      <h3 className={`text-xl lg:text-2xl font-medium leading-8 ${
-        isLightMode ? 'text-[#141414]' : 'text-[#F0F0F0]'
+      <h3 className={`text-xl lg:text-2xl font-medium leading-8 transition-colors ${
+        isLightMode ? 'text-[#141414] group-hover:text-[#95DE64]' : 'text-[#F0F0F0] group-hover:text-[#95DE64]'
       }`}>
         {title}
       </h3>
@@ -114,7 +114,7 @@ const WhyChooseUsSection = () => {
           {/* Scrolling Container */}
           <div 
             ref={scrollRef}
-            className="flex gap-4 lg:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing touch-pan-x"
+            className="flex gap-4 lg:gap-6 overflow-x-auto scrollbar-hide cursor-grab active:cursor-grabbing touch-pan-x py-8"
             onMouseEnter={() => setIsInteracting(true)}
             onMouseLeave={() => setIsInteracting(false)}
             onTouchStart={() => setIsInteracting(true)}

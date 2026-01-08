@@ -31,6 +31,12 @@ const ContactSection = () => {
     console.log("Form submitted:", formData);
   };
 
+  // Check if all fields are filled
+  const isFormValid = formData.name.trim() !== "" && 
+                      formData.subject.trim() !== "" && 
+                      formData.email.trim() !== "" && 
+                      formData.message.trim() !== "";
+
   // Use content from Firestore
   const socialLinks = contactContent.socialLinks.map(link => ({
     icon: link.icon,
@@ -238,7 +244,11 @@ const ContactSection = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full h-[59.5px] glass-button-outline border border-[#95DE64] rounded-xl flex items-center justify-center text-[#95DE64] text-sm font-medium leading-[22px] hover:glass-button hover:text-black transition-all"
+                className={`w-full h-[59.5px] rounded-xl flex items-center justify-center text-[#95DE64] text-sm font-medium leading-[22px] transition-all ${
+                  isLightMode 
+                    ? 'bg-white/50 border-2 border-[#95DE64] hover:bg-[#95DE64] hover:text-black backdrop-blur-sm' 
+                    : 'glass-button-outline border border-[#95DE64] hover:glass-button hover:text-black'
+                }`}
               >
                 Send now
               </button>
