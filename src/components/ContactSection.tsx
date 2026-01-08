@@ -244,10 +244,15 @@ const ContactSection = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className={`w-full h-[59.5px] rounded-xl flex items-center justify-center text-[#95DE64] text-sm font-medium leading-[22px] transition-all ${
+                disabled={!isFormValid}
+                className={`w-full h-[59.5px] rounded-xl flex items-center justify-center text-sm font-medium leading-[22px] transition-all ${
                   isLightMode 
-                    ? 'bg-white/50 border-2 border-[#95DE64] hover:bg-[#95DE64] hover:text-black backdrop-blur-sm' 
-                    : 'glass-button-outline border border-[#95DE64] hover:glass-button hover:text-black'
+                    ? !isFormValid
+                      ? 'bg-transparent text-gray-400 cursor-not-allowed border border-gray-300'
+                      : 'bg-[#95DE64] text-black border-2 border-[#95DE64] hover:bg-[#7bc653] cursor-pointer'
+                    : !isFormValid
+                      ? 'glass-button-outline border border-[#95DE64] text-[#95DE64] cursor-not-allowed opacity-50'
+                      : 'glass-button-outline border border-[#95DE64] text-[#95DE64] hover:glass-button cursor-pointer'
                 }`}
               >
                 Send now
